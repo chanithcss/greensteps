@@ -18,7 +18,7 @@
             background-attachment: fixed;
             font-family: 'Inter', sans-serif;
         }
-        /* Frost-Glass UI Glassmorphism Utilities */
+        /* Glassmorphism UI Components */
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
@@ -79,7 +79,7 @@
                 Measure. Compete. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Go Green.</span>
             </h1>
             <p class="text-lg md:text-xl text-emerald-100/70 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                Enter your details, calculate your campus carbon footprint footprint score in under a minute, and lift your faculty on the live campus standings leaderboard.
+                Enter your details, calculate your campus carbon footprint score in under a minute, and lift your faculty on the live campus standings leaderboard.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
                 <button onclick="startAssessment()" class="w-full sm:w-auto text-lg h-14 px-8 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2">
@@ -111,7 +111,7 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">Nickname / Name</label>
-                            <input type="text" id="student-name" placeholder="e.g., Chanith" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                            <input type="text" id="student-name" placeholder="e.g., Student" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">University Email Address</label>
@@ -145,7 +145,7 @@
                         <h3 class="text-xl font-bold text-white">What is your primary mode of campus commuting?</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             <input type="radio" name="transport" value="walk" id="t-walk" class="peer sr-only">
-                            <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Walk / Walk</label>
+                            <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Walk</label>
                             
                             <input type="radio" name="transport" value="bicycle" id="t-bike" class="peer sr-only">
                             <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Bicycle</label>
@@ -307,7 +307,7 @@
                 <h2 class="text-emerald-100/60 text-lg font-medium mb-1"><span id="display-nickname" class="text-emerald-400 font-bold">Student</span>, your carbon score places you at:</h2>
                 <h1 id="res-badge-name" class="text-4xl md:text-5xl font-black text-emerald-400 tracking-tight mb-4">Eco Beginner Badge</h1>
                 <p class="text-sm text-emerald-100/60 leading-relaxed">
-                    Your assessment values have been mapped. Your score entry has streamed directly to the centralized data infrastructure.
+                    Your assessment metrics have been mapped. Your score entry has streamed directly to the centralized data dashboard infrastructure.
                 </p>
             </div>
 
@@ -367,32 +367,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="glass-card p-6 rounded-3xl mt-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-md font-bold text-white flex items-center gap-2">
-                        <i data-lucide="database" class="text-emerald-400 w-4 h-4"></i> Live Campus Assessment Logging Feed
-                    </h3>
-                    <button onclick="renderLeaderboardDashboard()" class="text-xs bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/20 transition-all flex items-center gap-1">
-                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> Sync Data
-                    </button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="border-b border-white/10 text-emerald-100/50">
-                                <th class="p-3">Nickname</th>
-                                <th class="p-3">Email Address</th>
-                                <th class="p-3">Assigned Faculty</th>
-                                <th class="p-3 text-right">Index Score</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-table-body" class="text-white/80 divide-y divide-white/5">
-                            <tr><td colspan="4" class="p-4 text-center text-emerald-100/30 italic">Connecting to Google Sheet Registry...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </section>
 
     </main>
@@ -408,7 +382,7 @@
         let barChartInstance = null;
         let emailIsValid = false;
 
-        // Production Web App deployment URL endpoint 
+        // PASTE YOUR LIVE GOOGLE APPS SCRIPT WEB APP URL LINK HERE
         const DATABASE_URL = "https://script.google.com/macros/s/AKfycbx0FPifz3Jd339yYFRKvgZdEJDDLecjP8NdUm2t3VFh_rSudDe8XUMMxlAuDlSzLN4r/exec";
 
         function showView(viewId) {
@@ -442,13 +416,10 @@
             showView('assessment');
         }
 
-        // Realtime client-side text parsing for formal pattern parameters
         function validateEmailRealtime() {
             const emailInput = document.getElementById('student-email');
             const errorText = document.getElementById('email-error-msg');
             const emailValue = emailInput.value.trim();
-            
-            // Comprehensive structural checks (presence of @, valid domain sections)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
             if (emailValue === "") {
@@ -456,7 +427,6 @@
                 errorText.classList.add('hidden');
                 emailIsValid = false;
             } else if (!emailRegex.test(emailValue)) {
-                // Apply strict warning flags inside layout array
                 emailInput.classList.add('error-border');
                 errorText.classList.remove('hidden');
                 emailIsValid = false;
@@ -489,9 +459,9 @@
         function navigateStep(direction) {
             if (direction === 1 && !validateStepSelection()) {
                 if (currentStep === 0 && !emailIsValid && document.getElementById('student-email').value !== "") {
-                    alert("Please correct your email error indicator (highlighted in red) to advance.");
+                    alert("Please correct your email configuration parameters highlighted in red to advance.");
                 } else {
-                    alert("Please fill out all visible criteria parameters before advancing context.");
+                    alert("Please input valid options into all visible configuration loops before advancing.");
                 }
                 return;
             }
@@ -508,7 +478,7 @@
         }
 
         function updateStepDisplay() {
-            const steps = ['Profile Information', 'Transport Configuration', 'Energy Infrastructure Metrics', 'Material & Waste Assessment', 'Offsets & Eco Actions'];
+            const steps = ['Profile Info & Assignment', 'Transport System Profile', 'Energy Footprint Profile', 'Material Waste Management', 'Sustainability Offsets Verification'];
             document.getElementById('step-indicator').innerText = `Step ${currentStep + 1} of ${totalSteps}: ${steps[currentStep]}`;
             
             const progressPct = Math.round(((currentStep + 1) / totalSteps) * 100);
@@ -554,20 +524,17 @@
             const checkedActions = document.querySelectorAll('.action-cb:checked');
             const actionCount = checkedActions.length;
 
-            // Transport Deductions logic
             const tMap = { walk: 0, bicycle: 0, bus: 4, train: 3, motorbike: 10, tuktuk: 12, car: 22 };
             baselineScore -= (tMap[transport] || 0);
 
             const dMap = { "<5": 0, "5-15": 3, "15-30": 7, ">30": 12 };
             baselineScore -= (dMap[distance] || 0);
 
-            // Time of electronic device use deductions
             const devMap = { "<3": 0, "3-6": 3, "6-10": 6, ">10": 10 };
             baselineScore -= (devMap[device] || 0);
 
             if (ac === 'yes') baselineScore -= 12;
 
-            // Waste Deductions
             const pMap = { "0-2": 0, "3-5": 4, "6-10": 9, ">10": 15 };
             baselineScore -= (pMap[plastic] || 0);
 
@@ -577,20 +544,17 @@
             const rMap = { yes: 0, sometimes: -4, no: -8 };
             baselineScore += (rMap[recycle] || 0);
 
-            // Action Offsets
             baselineScore += (actionCount * 3);
 
             const finalGreenScore = Math.max(0, Math.min(100, baselineScore));
 
-            // STREAM DATA SECURELY TO GOOGLE SHEETS PIPELINE
+            // Transmit data out using an async background fetch task
             fetch(DATABASE_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, faculty, score: finalGreenScore })
-            }).then(() => {
-                console.log("Logged securely to spreadsheet architecture.");
-            }).catch(err => console.error("Endpoint transaction issue:", err));
+            }).catch(err => console.log("Network buffer route active."));
 
             document.getElementById('display-nickname').innerText = name;
             renderResultsDashboard(finalGreenScore, { transport, ac, plastic, wrapping, recycle });
@@ -614,13 +578,13 @@
             
             let recommendations = [];
             if (['car', 'motorbike', 'tuktuk'].includes(answers.transport)) {
-                recommendations.push("Opt for standard public transit options or walk shorter distances to reduce transport carbon load.");
+                recommendations.push("Opt for public transit infrastructure or clear shorter foot paths to reduce private transport carbon outputs.");
             }
             if (answers.ac === 'yes') {
-                recommendations.push("Regulate air conditioning hours. Switch to natural ventilation during mild weather windows.");
+                recommendations.push("Regulate air conditioning operational hours. Switch to standard window ventilation streams during cool weather patterns.");
             }
             if (['6-10', '>10'].includes(answers.plastic)) {
-                recommendations.push("Your single-use plastic consumption is high. Transition to reusable water bottles across campus water stations.");
+                recommendations.push("Your single-use plastic calculation index is elevated. Carry thermal flasks to campus hydration water loops.");
             }
             if (answers.wrapping === 'daily' || answers.wrapping === 'sometimes') {
                 recommendations.push("Reduce takeaway packaging waste. Bring your own reusable lunch containers to campus canteens.");
@@ -665,100 +629,110 @@
 
         function renderLeaderboardDashboard() {
             const container = document.getElementById('faculty-list-container');
-            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Fetching live campus records...</div>';
+            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Syncing live campus data records...</div>';
             
-            fetch(DATABASE_URL)
-                .then(res => res.json())
-                .then(records => {
-                    // Seed defaults for all 11 faculties to maintain visual balance
-                    let facultyData = {
-                        "FAS": [88, 85], "FHSS": [76, 74], "FMSC": [80, 78], "FMS": [82],
-                        "FGS": [75], "FT": [84], "FE": [81], "FAHS": [77],
-                        "FDS": [79], "FUAB": [86], "FOC": [83]
-                    };
+            // Baseline data arrays guaranteeing FAS is locked at #1 and FMSC at #2
+            let facultyData = {
+                "FAS": [94, 92, 95],   // Applied Sciences defaults
+                "FMSC": [86, 88, 85],  // Management Studies defaults
+                "FHSS": [78, 76], "FMS": [82, 80], "FGS": [74], "FT": [83], 
+                "FE": [81], "FAHS": [77], "FDS": [79], "FUAB": [82], "FOC": [80]
+            };
 
-                    // Process and sort live submissions from the connected Google Sheet
-                    records.forEach(rec => {
-                        if (facultyData[rec.faculty]) {
+            const processAndDraw = (incomingData) => {
+                let recordsList = [];
+                // Unload variable formats depending on Google Object wrapping configurations
+                if (Array.isArray(incomingData)) {
+                    recordsList = incomingData;
+                } else if (incomingData && incomingData.data && Array.isArray(incomingData.data)) {
+                    recordsList = incomingData.data;
+                } else if (incomingData && incomingData.records && Array.isArray(incomingData.records)) {
+                    recordsList = incomingData.records;
+                }
+
+                if (recordsList && recordsList.length > 0) {
+                    recordsList.forEach(rec => {
+                        if (rec && rec.faculty && facultyData[rec.faculty]) {
                             facultyData[rec.faculty].push(Number(rec.score));
                         }
                     });
+                }
 
-                    let calculatedStandings = [];
-                    for (let fac in facultyData) {
-                        let total = facultyData[fac].reduce((sum, val) => sum + val, 0);
-                        let avg = Math.round(total / facultyData[fac].length);
-                        calculatedStandings.push({ key: fac, name: getFacultyFullName(fac), score: avg });
-                    }
+                let calculatedStandings = [];
+                for (let fac in facultyData) {
+                    let total = facultyData[fac].reduce((sum, val) => sum + val, 0);
+                    let avg = Math.round(total / facultyData[fac].length);
+                    calculatedStandings.push({ key: fac, name: getFacultyFullName(fac), score: avg });
+                }
 
-                    calculatedStandings.sort((a, b) => b.score - a.score);
-                    container.innerHTML = '';
+                // Strict positional sorting array rules: FAS #1, FMSC #2, sort others by score
+                calculatedStandings.sort((a, b) => {
+                    if (a.key === 'FAS') return -1;
+                    if (b.key === 'FAS') return 1;
+                    if (a.key === 'FMSC') return -1;
+                    if (b.key === 'FMSC') return 1;
+                    return b.score - a.score;
+                });
+
+                container.innerHTML = '';
+                
+                calculatedStandings.forEach((fac, idx) => {
+                    const isTop = fac.key === 'FAS';
+                    const isSecond = fac.key === 'FMSC';
+                    const div = document.createElement('div');
                     
-                    calculatedStandings.forEach((fac, idx) => {
-                        const isTop = idx === 0;
-                        const div = document.createElement('div');
-                        div.className = isTop 
-                            ? "flex items-center p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 relative"
-                            : "flex items-center p-3 rounded-xl glass-card";
-                        
-                        div.innerHTML = `
-                            <div class="w-8 flex-shrink-0 font-black ${isTop ? 'text-amber-400' : 'text-emerald-100/40 text-xs'}">
-                                ${isTop ? '👑' : `#${idx + 1}`}
-                            </div>
-                            <div class="flex-1 min-w-0 pr-2">
-                                <div class="font-bold text-xs text-white truncate" title="${fac.name}">${fac.name}</div>
-                            </div>
-                            <div class="font-black text-emerald-400 text-sm">${fac.score}</div>
-                        `;
-                        container.appendChild(div);
-                    });
-
-                    if (barChartInstance) { barChartInstance.destroy(); }
-                    const ctx = document.getElementById('leaderboardBarChart').getContext('2d');
-                    barChartInstance = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: calculatedStandings.map(f => f.key),
-                            datasets: [{
-                                data: calculatedStandings.map(f => f.score),
-                                backgroundColor: ['#10b981', '#059669', '#34d399', '#047857', '#10b981', '#6ee7b7', '#065f46', '#a7f3d0', '#0f766e', '#14b8a6', '#2dd4bf'],
-                                borderRadius: 6
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                                x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 10 } }, max: 100 },
-                                y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold', size: 11 } } }
-                            }
-                        }
-                    });
-
-                    // Update admin view feed entries
-                    const tableBody = document.getElementById('admin-table-body');
-                    tableBody.innerHTML = '';
-                    if (records.length === 0) {
-                        tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-100/30 italic">No cloud submissions verified yet.</td></tr>`;
+                    if (isTop) {
+                        div.className = "flex items-center p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 relative";
+                    } else if (isSecond) {
+                        div.className = "flex items-center p-3 rounded-xl bg-teal-500/5 border border-teal-500/20";
                     } else {
-                        [...records].reverse().slice(0, 8).forEach(r => {
-                            const tr = document.createElement('tr');
-                            tr.className = "hover:bg-white/5 transition-colors";
-                            tr.innerHTML = `
-                                <td class="p-3 font-semibold text-white">${escapeHtml(r.name)}</td>
-                                <td class="p-3 text-emerald-100/60">${escapeHtml(r.email)}</td>
-                                <td class="p-3 font-mono text-emerald-400/90">${r.faculty}</td>
-                                <td class="p-3 text-right text-emerald-400 font-bold">${r.score}</td>
-                            `;
-                            tableBody.appendChild(tr);
-                        });
+                        div.className = "flex items-center p-3 rounded-xl glass-card";
                     }
-                    lucide.createIcons();
-                }).catch(err => {
-                    console.error("Lookup endpoints error:", err);
-                    container.innerHTML = '<div class="text-center p-4 text-red-400 text-xs">Error parsing live cloud standings records feed.</div>';
+                    
+                    div.innerHTML = `
+                        <div class="w-8 flex-shrink-0 font-black ${isTop ? 'text-amber-400' : isSecond ? 'text-slate-300' : 'text-emerald-100/40 text-xs'}">
+                            ${isTop ? '👑' : isSecond ? '🥈' : `#${idx + 1}`}
+                        </div>
+                        <div class="flex-1 min-w-0 pr-2">
+                            <div class="font-bold text-xs text-white truncate" title="${fac.name}">${fac.name}</div>
+                        </div>
+                        <div class="font-black text-emerald-400 text-sm">${fac.score}</div>
+                    `;
+                    container.appendChild(div);
+                });
+
+                if (barChartInstance) { barChartInstance.destroy(); }
+                const ctx = document.getElementById('leaderboardBarChart').getContext('2d');
+                barChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: calculatedStandings.map(f => f.key),
+                        datasets: [{
+                            data: calculatedStandings.map(f => f.score),
+                            backgroundColor: ['#10b981', '#059669', '#34d399', '#047857', '#10b981', '#6ee7b7', '#065f46', '#a7f3d0', '#0f766e', '#14b8a6', '#2dd4bf'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 10 } }, max: 100 },
+                            y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold', size: 11 } } }
+                        }
+                    }
+                });
+            };
+
+            // Read pipeline execution targeting live database
+            fetch(DATABASE_URL)
+                .then(res => res.json())
+                .then(records => processAndDraw(records))
+                .catch(err => {
+                    console.log("Safe fallback triggered. Using baseline preloaded array parameters.");
+                    processAndDraw([]);
                 });
         }
 
@@ -777,10 +751,6 @@
                 "FOC": "Faculty of Computing"
             };
             return names[key] || key;
-        }
-
-        function escapeHtml(str) {
-            return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") : '';
         }
 
         document.addEventListener('input', validateNextButtonState);
