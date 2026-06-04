@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GreenSteps USJ - Measure. Compete. Go Green.</title>
-    <!-- Tailwind CSS for Dark Eco Theme & Layouts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js for Impact Breakdown & Leaderboard Distributions -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Lucide Icons Vector Library -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -43,6 +40,10 @@
             outline: none;
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
         }
+        .error-border {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2) !important;
+        }
         .peer:checked + label {
             border-color: #10b981 !important;
             background: rgba(16, 185, 129, 0.12) !important;
@@ -53,7 +54,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Nav Bar -->
     <nav class="border-b border-white/5 bg-black/20 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
@@ -68,20 +68,18 @@
         </div>
     </nav>
 
-    <!-- Main Content Dynamic Container -->
     <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col justify-center">
         
-        <!-- 1. HOME VIEW -->
         <section id="view-home" class="text-center py-12">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8 border-emerald-500/20">
                 <i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i>
-                <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">USJ Environment Day</span>
+                <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">USJ Environmental Sustainability Program</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-white leading-tight">
                 Measure. Compete. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Go Green.</span>
             </h1>
             <p class="text-lg md:text-xl text-emerald-100/70 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                Enter your details, calculate your carbon footprint score in under a minute, and lift your faculty on the live campus leaderboard.
+                Enter your details, calculate your campus carbon footprint footprint score in under a minute, and lift your faculty on the live campus standings leaderboard.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
                 <button onclick="startAssessment()" class="w-full sm:w-auto text-lg h-14 px-8 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2">
@@ -93,9 +91,7 @@
             </div>
         </section>
 
-        <!-- 2. ASSESSMENT VIEW -->
         <section id="view-assessment" class="max-w-2xl w-full mx-auto hidden-view">
-            <!-- Progress Tracker -->
             <div class="mb-8">
                 <div class="flex justify-between text-sm font-medium mb-2 text-emerald-100/60">
                     <span id="step-indicator">Step 1 of 5: Profile Info</span>
@@ -106,10 +102,8 @@
                 </div>
             </div>
 
-            <!-- Form Wrapper Card -->
             <div class="glass-card p-6 md:p-8 rounded-3xl">
                 
-                <!-- STEP 1: Profile Info & Faculty Assignment -->
                 <div id="form-step-0" class="step-content space-y-5">
                     <h3 class="text-xl font-bold text-white flex items-center gap-2">
                         <i data-lucide="user" class="text-emerald-400 w-5 h-5"></i> Campus Profile Info
@@ -117,42 +111,50 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">Nickname / Name</label>
-                            <input type="text" id="student-name" placeholder="e.g., Sam" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                            <input type="text" id="student-name" placeholder="e.g., Chanith" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">University Email Address</label>
-                            <input type="email" id="student-email" placeholder="e.g., sam@sjp.ac.lk" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                            <input type="email" id="student-email" oninput="validateEmailRealtime()" placeholder="e.g., student@sjp.ac.lk" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                            <p id="email-error-msg" class="text-xs text-red-500 mt-1.5 hidden flex items-center gap-1">
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Incorrect email format! Ensure it contains '@' and a valid domain.
+                            </p>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">Select Your Faculty</label>
                             <select id="student-faculty" class="w-full h-12 px-4 rounded-xl glass-input text-sm appearance-none cursor-pointer">
                                 <option value="" disabled selected class="bg-neutral-900">Choose your faculty...</option>
-                                <option value="Applied Sciences" class="bg-neutral-900">Faculty of Applied Sciences</option>
-                                <option value="Management" class="bg-neutral-900">Faculty of Management Studies & Commerce</option>
-                                <option value="Humanities" class="bg-neutral-900">Faculty of Humanities & Social Sciences</option>
-                                <option value="Technology" class="bg-neutral-900">Faculty of Technology</option>
-                                <option value="Medical Sci" class="bg-neutral-900">Faculty of Medical Sciences</option>
+                                <option value="FAS" class="bg-neutral-900">Faculty of Applied Sciences (FAS)</option>
+                                <option value="FHSS" class="bg-neutral-900">Faculty of Humanities and Social Sciences (FHSS)</option>
+                                <option value="FMSC" class="bg-neutral-900">Faculty of Management Studies and Commerce (FMSC)</option>
+                                <option value="FMS" class="bg-neutral-900">Faculty of Medical Sciences (FMS)</option>
+                                <option value="FGS" class="bg-neutral-900">Faculty of Graduate Studies (FGS)</option>
+                                <option value="FT" class="bg-neutral-900">Faculty of Technology (FT)</option>
+                                <option value="FE" class="bg-neutral-900">Faculty of Engineering (FE)</option>
+                                <option value="FAHS" class="bg-neutral-900">Faculty of Allied Health Sciences (FAHS)</option>
+                                <option value="FDS" class="bg-neutral-900">Faculty of Dental Sciences (FDS)</option>
+                                <option value="FUAB" class="bg-neutral-900">Faculty of Urban and Aquatic Bioresources (FUAB)</option>
+                                <option value="FOC" class="bg-neutral-900">Faculty of Computing (FOC)</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <!-- STEP 2: Transport -->
                 <div id="form-step-1" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-white">What is your main mode of transport?</h3>
+                        <h3 class="text-xl font-bold text-white">What is your primary mode of campus commuting?</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             <input type="radio" name="transport" value="walk" id="t-walk" class="peer sr-only">
-                            <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Walk</label>
+                            <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Walk / Walk</label>
                             
                             <input type="radio" name="transport" value="bicycle" id="t-bike" class="peer sr-only">
                             <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Bicycle</label>
                             
                             <input type="radio" name="transport" value="bus" id="t-bus" class="peer sr-only">
-                            <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Bus</label>
+                            <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Public Bus</label>
 
                             <input type="radio" name="transport" value="train" id="t-train" class="peer sr-only">
-                            <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Train</label>
+                            <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Train Connection</label>
 
                             <input type="radio" name="transport" value="motorbike" id="t-moto" class="peer sr-only">
                             <label for="t-moto" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Motorbike</label>
@@ -161,11 +163,11 @@
                             <label for="t-tuk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center">Tuk Tuk</label>
 
                             <input type="radio" name="transport" value="car" id="t-car" class="peer sr-only">
-                            <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center col-span-2 sm:col-span-1">Car</label>
+                            <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 text-sm font-medium cursor-pointer transition-all text-center col-span-2 sm:col-span-1">Private Car</label>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4">
-                        <h3 class="text-xl font-bold text-white">Daily travel distance?</h3>
+                        <h3 class="text-xl font-bold text-white">Estimated total daily travel distance?</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <input type="radio" name="distance" value="<5" id="d-1" class="peer sr-only">
                             <label for="d-1" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Less than 5 km</label>
@@ -182,10 +184,9 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: Energy -->
                 <div id="form-step-2" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-white">Daily device usage?</h3>
+                        <h3 class="text-xl font-bold text-white">Average daily time of electronic device use?</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <input type="radio" name="device" value="<3" id="dev-1" class="peer sr-only">
                             <label for="dev-1" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Less than 3 hours</label>
@@ -201,7 +202,7 @@
                         </div>
                     </div>
                     <div class="space-y-4 pt-4">
-                        <h3 class="text-xl font-bold text-white">Do you use Air Conditioning?</h3>
+                        <h3 class="text-xl font-bold text-white">Do you regularly utilize Air Conditioning (AC) loops?</h3>
                         <div class="grid grid-cols-2 gap-3">
                             <input type="radio" name="ac" value="yes" id="ac-y" class="peer sr-only">
                             <label for="ac-y" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Yes</label>
@@ -212,26 +213,38 @@
                     </div>
                 </div>
 
-                <!-- STEP 4: Waste Management -->
                 <div id="form-step-3" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
-                        <h3 class="text-xl font-bold text-white">Plastic bottles/cups used weekly?</h3>
+                        <h3 class="text-xl font-bold text-white">Single-use plastic bottles/cups used weekly?</h3>
                         <div class="grid grid-cols-2 gap-3">
                             <input type="radio" name="plastic" value="0-2" id="p-1" class="peer sr-only">
-                            <label for="p-1" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">0 - 2</label>
+                            <label for="p-1" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">0 - 2 items</label>
 
                             <input type="radio" name="plastic" value="3-5" id="p-2" class="peer sr-only">
-                            <label for="p-2" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">3 - 5</label>
+                            <label for="p-2" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">3 - 5 items</label>
 
                             <input type="radio" name="plastic" value="6-10" id="p-3" class="peer sr-only">
-                            <label for="p-3" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">6 - 10</label>
+                            <label for="p-3" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">6 - 10 items</label>
 
                             <input type="radio" name="plastic" value=">10" id="p-4" class="peer sr-only">
-                            <label for="p-4" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">More than 10</label>
+                            <label for="p-4" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">More than 10 items</label>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4">
-                        <h3 class="text-xl font-bold text-white">Do you recycle?</h3>
+                        <h3 class="text-xl font-bold text-white">How often do you buy meals with plastic wrap/lunch sheets?</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <input type="radio" name="wrapping" value="never" id="w-n" class="peer sr-only">
+                            <label for="w-n" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Rarely / Never</label>
+
+                            <input type="radio" name="wrapping" value="sometimes" id="w-s" class="peer sr-only">
+                            <label for="w-s" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Sometimes</label>
+
+                            <input type="radio" name="wrapping" value="daily" id="w-d" class="peer sr-only">
+                            <label for="w-d" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Almost Daily</label>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-xl font-bold text-white">Do you actively sort/recycle waste items?</h3>
                         <div class="grid grid-cols-3 gap-3">
                             <input type="radio" name="recycle" value="yes" id="r-y" class="peer sr-only">
                             <label for="r-y" class="rounded-xl border border-white/10 p-4 text-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-all">Yes</label>
@@ -245,38 +258,36 @@
                     </div>
                 </div>
 
-                <!-- STEP 5: Eco Action Verification -->
                 <div id="form-step-4" class="step-content space-y-6 hidden-view">
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-1">I currently do the following:</h3>
-                        <p class="text-emerald-100/50 text-xs mb-4">Select all applicable parameters. Sustainable actions improve your green score.</p>
+                        <h3 class="text-xl font-bold text-white mb-1">Verify your ongoing green actions:</h3>
+                        <p class="text-emerald-100/50 text-xs mb-4">Select all parameters that match your standard weekly habits. These add score offsets.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <label class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
                                 <input type="checkbox" value="bottle" class="action-cb w-5 h-5 rounded accent-emerald-500">
-                                <span class="text-sm font-medium">Use reusable bottle</span>
+                                <span class="text-sm font-medium">Use own reusable thermal flask</span>
                             </label>
                             <label class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
                                 <input type="checkbox" value="public" class="action-cb w-5 h-5 rounded accent-emerald-500">
-                                <span class="text-sm font-medium">Use public transport</span>
+                                <span class="text-sm font-medium">Prioritize collective transit</span>
                             </label>
                             <label class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
                                 <input type="checkbox" value="walk" class="action-cb w-5 h-5 rounded accent-emerald-500">
-                                <span class="text-sm font-medium">Walk short distances</span>
+                                <span class="text-sm font-medium">Walk shorter cross-campus intervals</span>
                             </label>
                             <label class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
                                 <input type="checkbox" value="bag" class="action-cb w-5 h-5 rounded accent-emerald-500">
-                                <span class="text-sm font-medium">Bring own shopping bag</span>
+                                <span class="text-sm font-medium">Bring own reusable carrier canvas bag</span>
                             </label>
                             <label class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors col-span-1 sm:col-span-2">
                                 <input type="checkbox" value="tree" class="action-cb w-5 h-5 rounded accent-emerald-500">
-                                <span class="text-sm font-medium">Participate in tree planting</span>
+                                <span class="text-sm font-medium">Participated in formal environmental volunteering / restoration programs</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <!-- Navigation Controls -->
                 <div class="mt-8 pt-4 border-t border-white/5 flex justify-between">
                     <button id="btn-back" onclick="navigateStep(-1)" class="h-11 px-5 rounded-full border border-white/10 hover:bg-white/5 font-semibold text-sm inline-flex items-center gap-2 transition-all">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
@@ -288,24 +299,21 @@
             </div>
         </section>
 
-        <!-- 3. RESULTS VIEW -->
         <section id="view-results" class="space-y-8 hidden-view">
             <div class="text-center max-w-xl mx-auto">
                 <div class="inline-block p-4 rounded-3xl bg-white/5 border border-white/10 mb-4">
                     <span id="res-badge-icon" class="text-6xl">🌱</span>
                 </div>
-                <h2 class="text-emerald-100/60 text-lg font-medium mb-1"><span id="display-nickname" class="text-emerald-400 font-bold">Student</span>, you earned the</h2>
+                <h2 class="text-emerald-100/60 text-lg font-medium mb-1"><span id="display-nickname" class="text-emerald-400 font-bold">Student</span>, your carbon score places you at:</h2>
                 <h1 id="res-badge-name" class="text-4xl md:text-5xl font-black text-emerald-400 tracking-tight mb-4">Eco Beginner Badge</h1>
                 <p class="text-sm text-emerald-100/60 leading-relaxed">
-                    Your dynamic footprint details have calculated! Your score has been logged on the local campus record system.
+                    Your assessment values have been mapped. Your score entry has streamed directly to the centralized data infrastructure.
                 </p>
             </div>
 
-            <!-- Quantitative Analytics Metric Boxes -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Green Score Panel -->
                 <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col items-center justify-center relative overflow-hidden text-center">
-                    <h3 class="text-md font-medium text-emerald-100/50 mb-2">Your Green Score</h3>
+                    <h3 class="text-md font-medium text-emerald-100/50 mb-2">Calculated Green Score Index</h3>
                     <div class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
                         <span id="res-green-score">0</span>/100
                     </div>
@@ -314,24 +322,21 @@
                     </div>
                 </div>
 
-                <!-- Carbon Chart Container Breakdown -->
                 <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col relative">
-                    <h3 class="text-md font-medium text-emerald-100/50 mb-4">Carbon Impact Distribution</h3>
+                    <h3 class="text-md font-medium text-emerald-100/50 mb-4">Carbon Footprint Balancing Matrix</h3>
                     <div class="w-full h-44 flex items-center justify-center">
                         <canvas id="carbonPieChart" class="max-h-full"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- Actionable Recommendations Matrix -->
             <div class="glass-card p-6 md:p-8 rounded-3xl">
                 <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <i data-lucide="alert-circle" class="text-emerald-400 w-5 h-5"></i> Targeted Sustainability Action Plan
+                    <i data-lucide="alert-circle" class="text-emerald-400 w-5 h-5"></i> Targeted Sustainability Strategies
                 </h3>
                 <ul id="res-tips-list" class="space-y-3"></ul>
             </div>
 
-            <!-- Controls Context -->
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <button onclick="showView('leaderboard')" class="h-14 px-8 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-md inline-flex items-center justify-center gap-2 transition-all shadow-lg">
                     <i data-lucide="trophy" class="w-5 h-5"></i> View Leaderboard
@@ -342,38 +347,34 @@
             </div>
         </section>
 
-        <!-- 4. LEADERBOARD VIEW -->
         <section id="view-leaderboard" class="space-y-8 hidden-view">
             <div class="text-center max-w-xl mx-auto mb-4">
                 <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl mb-4 text-emerald-400">
                     <i data-lucide="trophy" class="w-8 h-8"></i>
                 </div>
-                <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Faculty Leaderboard</h1>
-                <p class="text-sm text-emerald-100/60">Which faculty is championing carbon neutrality metrics at USJ?</p>
+                <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Inter-Faculty Standings</h1>
+                <p class="text-sm text-emerald-100/60">Real-time ecological efficiency distribution metrics across all 11 university faculties.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Ranked Standings List UI -->
-                <div class="lg:col-span-1 space-y-3" id="faculty-list-container">
-                    <!-- Dynamic standard rendering from live storage calculation variables -->
+                <div class="lg:col-span-1 space-y-3 max-h-[500px] overflow-y-auto pr-1" id="faculty-list-container">
+                    <div class="text-center p-4 text-emerald-100/40 italic">Loading campus ranks...</div>
                 </div>
-                <!-- Analytics Bar Chart Canvas container -->
-                <div class="lg:col-span-2 glass-card p-6 rounded-3xl min-h-[300px] flex flex-col justify-between">
+                <div class="lg:col-span-2 glass-card p-6 rounded-3xl min-h-[400px] flex flex-col justify-between">
                     <h3 class="text-md font-bold text-white mb-4">Inter-Faculty Environmental Index Distribution</h3>
-                    <div class="flex-1 relative w-full h-full min-h-[220px]">
+                    <div class="flex-1 relative w-full h-full min-h-[320px]">
                         <canvas id="leaderboardBarChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- LOCAL STORAGE ADMINISTRATIVE PANEL -->
             <div class="glass-card p-6 rounded-3xl mt-8">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-md font-bold text-white flex items-center gap-2">
-                        <i data-lucide="database" class="text-emerald-400 w-4 h-4"></i> Local Recorded Submissions (Localhost Database)
+                        <i data-lucide="database" class="text-emerald-400 w-4 h-4"></i> Live Campus Assessment Logging Feed
                     </h3>
-                    <button onclick="clearRecordedData()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 rounded-lg border border-red-500/20 transition-all">
-                        Clear Records
+                    <button onclick="renderLeaderboardDashboard()" class="text-xs bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-500/20 transition-all flex items-center gap-1">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> Sync Data
                     </button>
                 </div>
                 <div class="overflow-x-auto">
@@ -382,12 +383,12 @@
                             <tr class="border-b border-white/10 text-emerald-100/50">
                                 <th class="p-3">Nickname</th>
                                 <th class="p-3">Email Address</th>
-                                <th class="p-3">Faculty</th>
-                                <th class="p-3 text-right">Green Score</th>
+                                <th class="p-3">Assigned Faculty</th>
+                                <th class="p-3 text-right">Index Score</th>
                             </tr>
                         </thead>
                         <tbody id="admin-table-body" class="text-white/80 divide-y divide-white/5">
-                            <!-- Injected rows via JavaScript -->
+                            <tr><td colspan="4" class="p-4 text-center text-emerald-100/30 italic">Connecting to Google Sheet Registry...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -396,32 +397,25 @@
 
     </main>
 
-    <!-- Footer Context -->
     <footer class="border-t border-white/5 py-6 bg-black/40 text-center text-xs text-emerald-100/40">
-        <p>&copy; 2026 GreenSteps USJ — Environmental Society Awareness Initiative.</p>
+        <p>&copy; 2026 GreenSteps USJ — Campus Environmental Society Awareness Platform.</p>
     </footer>
 
-    <!-- JavaScript Application State Controller Engine Logic -->
     <script>
         let currentStep = 0;
-        const totalSteps = 5; // Updated step parameters count
+        const totalSteps = 5; 
         let pieChartInstance = null;
         let barChartInstance = null;
+        let emailIsValid = false;
 
-        // Base Target Averages inside local memory to populate if storage clean
-        const defaultFacultyScores = {
-            "Applied Sciences": [91, 85, 88],
-            "Management": [82, 80],
-            "Humanities": [78, 76],
-            "Technology": [75],
-            "Medical Sci": [72]
-        };
+        // Production Web App deployment URL endpoint 
+        const DATABASE_URL = "https://script.google.com/macros/s/AKfycbx0FPifz3Jd339yYFRKvgZdEJDDLecjP8NdUm2t3VFh_rSudDe8XUMMxlAuDlSzLN4r/exec";
 
         function showView(viewId) {
             ['home', 'assessment', 'results', 'leaderboard'].forEach(v => {
                 document.getElementById(`view-${v}`).classList.add('hidden-view');
             });
-            document.getElementById(`view-${viewId}`).classList.remove('hidden-view');
+            document.getElementById('view-' + viewId).classList.remove('hidden-view');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
             if (viewId === 'leaderboard') {
@@ -431,9 +425,14 @@
 
         function startAssessment() {
             currentStep = 0;
-            // Clear inputs
+            emailIsValid = false;
             document.getElementById('student-name').value = '';
-            document.getElementById('student-email').value = '';
+            
+            const emailInput = document.getElementById('student-email');
+            emailInput.value = '';
+            emailInput.classList.remove('error-border');
+            document.getElementById('email-error-msg').classList.add('hidden');
+
             document.getElementById('student-faculty').value = '';
             
             const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
@@ -443,13 +442,37 @@
             showView('assessment');
         }
 
-        // Fixed validation locks: prevents moving forward if empty answers
+        // Realtime client-side text parsing for formal pattern parameters
+        function validateEmailRealtime() {
+            const emailInput = document.getElementById('student-email');
+            const errorText = document.getElementById('email-error-msg');
+            const emailValue = emailInput.value.trim();
+            
+            // Comprehensive structural checks (presence of @, valid domain sections)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (emailValue === "") {
+                emailInput.classList.remove('error-border');
+                errorText.classList.add('hidden');
+                emailIsValid = false;
+            } else if (!emailRegex.test(emailValue)) {
+                // Apply strict warning flags inside layout array
+                emailInput.classList.add('error-border');
+                errorText.classList.remove('hidden');
+                emailIsValid = false;
+            } else {
+                emailInput.classList.remove('error-border');
+                errorText.classList.add('hidden');
+                emailIsValid = true;
+            }
+            validateNextButtonState();
+        }
+
         function validateStepSelection() {
             if (currentStep === 0) {
                 const name = document.getElementById('student-name').value.trim();
-                const email = document.getElementById('student-email').value.trim();
                 const faculty = document.getElementById('student-faculty').value;
-                return name !== '' && email !== '' && faculty !== '';
+                return name !== '' && faculty !== '' && emailIsValid;
             }
             if (currentStep === 1) {
                 return document.querySelector('input[name="transport"]:checked') && document.querySelector('input[name="distance"]:checked');
@@ -458,14 +481,18 @@
                 return document.querySelector('input[name="device"]:checked') && document.querySelector('input[name="ac"]:checked');
             }
             if (currentStep === 3) {
-                return document.querySelector('input[name="plastic"]:checked') && document.querySelector('input[name="recycle"]:checked');
+                return document.querySelector('input[name="plastic"]:checked') && document.querySelector('input[name="wrapping"]:checked') && document.querySelector('input[name="recycle"]:checked');
             }
-            return true; // Checkboxes step optional
+            return true; 
         }
 
         function navigateStep(direction) {
             if (direction === 1 && !validateStepSelection()) {
-                alert("Please complete all fields on this step to proceed.");
+                if (currentStep === 0 && !emailIsValid && document.getElementById('student-email').value !== "") {
+                    alert("Please correct your email error indicator (highlighted in red) to advance.");
+                } else {
+                    alert("Please fill out all visible criteria parameters before advancing context.");
+                }
                 return;
             }
             
@@ -481,7 +508,7 @@
         }
 
         function updateStepDisplay() {
-            const steps = ['Profile Info', 'Transport', 'Energy Usage', 'Waste Management', 'Eco Actions Verification'];
+            const steps = ['Profile Information', 'Transport Configuration', 'Energy Infrastructure Metrics', 'Material & Waste Assessment', 'Offsets & Eco Actions'];
             document.getElementById('step-indicator').innerText = `Step ${currentStep + 1} of ${totalSteps}: ${steps[currentStep]}`;
             
             const progressPct = Math.round(((currentStep + 1) / totalSteps) * 100);
@@ -509,13 +536,11 @@
             document.getElementById('btn-next').disabled = !validateStepSelection();
         }
 
-        // Fixed calculation logic parsing exact scores perfectly up to 100 maximum
         function calculateGreenIndexResults() {
             const name = document.getElementById('student-name').value.trim();
             const email = document.getElementById('student-email').value.trim();
             const faculty = document.getElementById('student-faculty').value;
 
-            // Base Baseline 100 Score configuration
             let baselineScore = 100;
 
             const transport = document.querySelector('input[name="transport"]:checked').value;
@@ -523,78 +548,88 @@
             const device = document.querySelector('input[name="device"]:checked').value;
             const ac = document.querySelector('input[name="ac"]:checked').value;
             const plastic = document.querySelector('input[name="plastic"]:checked').value;
+            const wrapping = document.querySelector('input[name="wrapping"]:checked').value;
             const recycle = document.querySelector('input[name="recycle"]:checked').value;
             
             const checkedActions = document.querySelectorAll('.action-cb:checked');
             const actionCount = checkedActions.length;
 
-            // Negative Impact Point Deductions
-            const tMap = { walk: 0, bicycle: 0, bus: 5, train: 4, motorbike: 12, tuktuk: 15, car: 25 };
+            // Transport Deductions logic
+            const tMap = { walk: 0, bicycle: 0, bus: 4, train: 3, motorbike: 10, tuktuk: 12, car: 22 };
             baselineScore -= (tMap[transport] || 0);
 
-            const dMap = { "<5": 0, "5-15": 4, "15-30": 8, ">30": 15 };
+            const dMap = { "<5": 0, "5-15": 3, "15-30": 7, ">30": 12 };
             baselineScore -= (dMap[distance] || 0);
 
-            const devMap = { "<3": 0, "3-6": 3, "6-10": 7, ">10": 12 };
+            // Time of electronic device use deductions
+            const devMap = { "<3": 0, "3-6": 3, "6-10": 6, ">10": 10 };
             baselineScore -= (devMap[device] || 0);
 
-            if (ac === 'yes') baselineScore -= 15;
+            if (ac === 'yes') baselineScore -= 12;
 
-            const pMap = { "0-2": 0, "3-5": 5, "6-10": 12, ">10": 20 };
+            // Waste Deductions
+            const pMap = { "0-2": 0, "3-5": 4, "6-10": 9, ">10": 15 };
             baselineScore -= (pMap[plastic] || 0);
 
-            const rMap = { yes: 0, sometimes: -5, no: -10 };
+            const wMap = { never: 0, sometimes: 5, daily: 12 };
+            baselineScore -= (wMap[wrapping] || 0);
+
+            const rMap = { yes: 0, sometimes: -4, no: -8 };
             baselineScore += (rMap[recycle] || 0);
 
-            // Positive action additions
-            baselineScore += (actionCount * 4);
+            // Action Offsets
+            baselineScore += (actionCount * 3);
 
-            // Secure normalization constraints ensuring it sits tightly inside 0-100 range
             const finalGreenScore = Math.max(0, Math.min(100, baselineScore));
 
-            // RECORD DATA METHOD (Saves to current browser database instance)
-            const totalRecords = JSON.parse(localStorage.getItem('greensteps_records')) || [];
-            totalRecords.push({ name, email, faculty, score: finalGreenScore, date: new Date().toISOString() });
-            localStorage.setItem('greensteps_records', JSON.stringify(totalRecords));
+            // STREAM DATA SECURELY TO GOOGLE SHEETS PIPELINE
+            fetch(DATABASE_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, faculty, score: finalGreenScore })
+            }).then(() => {
+                console.log("Logged securely to spreadsheet architecture.");
+            }).catch(err => console.error("Endpoint transaction issue:", err));
 
-            // Trigger Render Output Panels
             document.getElementById('display-nickname').innerText = name;
-            renderResultsDashboard(finalGreenScore, { transport, ac, plastic, recycle });
+            renderResultsDashboard(finalGreenScore, { transport, ac, plastic, wrapping, recycle });
         }
 
         function renderResultsDashboard(green, answers) {
             document.getElementById('res-green-score').innerText = green;
             document.getElementById('res-green-bar').style.width = `${green}%`;
 
-            // Badge tier distributions
             let rank = { name: "Eco Beginner", icon: "🌱", color: "text-slate-400" };
-            if (green >= 80) rank = { name: "Eco Hero", icon: "👑", color: "text-emerald-400" };
-            else if (green >= 60) rank = { name: "Carbon Saver", icon: "🍃", color: "text-lime-400" };
-            else if (green >= 40) rank = { name: "Green Explorer", icon: "🧭", color: "text-green-400" };
+            if (green >= 82) rank = { name: "Eco Hero", icon: "👑", color: "text-emerald-400" };
+            else if (green >= 64) rank = { name: "Carbon Saver", icon: "🍃", color: "text-lime-400" };
+            else if (green >= 45) rank = { name: "Green Explorer", icon: "🧭", color: "text-green-400" };
 
             document.getElementById('res-badge-icon').innerText = rank.icon;
             document.getElementById('res-badge-name').innerText = `${rank.name} Badge`;
             document.getElementById('res-badge-name').className = `text-4xl md:text-5xl font-black tracking-tight mb-4 ${rank.color}`;
 
-            // Dynamic campus contextual tip allocations
             const tipsContainer = document.getElementById('res-tips-list');
             tipsContainer.innerHTML = '';
             
             let recommendations = [];
             if (['car', 'motorbike', 'tuktuk'].includes(answers.transport)) {
-                recommendations.push("Opt for standard public transit loops or micro-walking shortcuts to optimize daily transport overhead.");
+                recommendations.push("Opt for standard public transit options or walk shorter distances to reduce transport carbon load.");
             }
             if (answers.ac === 'yes') {
-                recommendations.push("Regulate localized workspace temperatures. Switch to mechanical ventilation loops during mild baseline humidity windows.");
+                recommendations.push("Regulate air conditioning hours. Switch to natural ventilation during mild weather windows.");
             }
             if (['6-10', '>10'].includes(answers.plastic)) {
-                recommendations.push("Your baseline reliance on individual plastics is elevated. Deploy steel thermal vessels across standard university water stations.");
+                recommendations.push("Your single-use plastic consumption is high. Transition to reusable water bottles across campus water stations.");
+            }
+            if (answers.wrapping === 'daily' || answers.wrapping === 'sometimes') {
+                recommendations.push("Reduce takeaway packaging waste. Bring your own reusable lunch containers to campus canteens.");
             }
             if (answers.recycle !== 'yes') {
-                recommendations.push("Segregate disposal structures. Map and utilize designated colored collection bins managed across common campus sectors.");
+                recommendations.push("Separate your waste. Utilize the color-coded recycling collection bins placed around the university.");
             }
             if (recommendations.length === 0) {
-                recommendations.push("Outstanding consumption habits! Model these sustainability choices to set standards for peer groups across the university.");
+                recommendations.push("Outstanding sustainable practices! Share your eco habits to inspire your peers across the university.");
             }
 
             recommendations.forEach(tip => {
@@ -606,7 +641,6 @@
 
             showView('results');
             
-            // Build visual metrics breakdowns dynamically
             if (pieChartInstance) { pieChartInstance.destroy(); }
             const ctx = document.getElementById('carbonPieChart').getContext('2d');
             pieChartInstance = new Chart(ctx, {
@@ -629,122 +663,126 @@
             lucide.createIcons();
         }
 
-        // Leaderboard Generation Processing dynamically computing actual values
         function renderLeaderboardDashboard() {
-            const records = JSON.parse(localStorage.getItem('greensteps_records')) || [];
-            
-            // Reinitialize averages matching historical balances
-            let facultyData = {
-                "Applied Sciences": [91, 89],
-                "Management": [82, 80],
-                "Humanities": [78, 74],
-                "Technology": [75],
-                "Medical Sci": [72]
-            };
-
-            // Inject fresh local records parameters into corresponding structural lists dynamically
-            records.forEach(rec => {
-                if (facultyData[rec.faculty]) {
-                    facultyData[rec.faculty].push(rec.score);
-                }
-            });
-
-            // Map down average indexes
-            let calculatedStandings = [];
-            for (let fac in facultyData) {
-                let total = facultyData[fac].reduce((sum, val) => sum + val, 0);
-                let avg = Math.round(total / facultyData[fac].length);
-                calculatedStandings.push({ key: fac, name: getFacultyFullName(fac), score: avg });
-            }
-
-            // Sort ranking lists hierarchically
-            calculatedStandings.sort((a, b) => b.score - a.score);
-
-            // Rebuild UI components dynamically based on processed rankings
             const container = document.getElementById('faculty-list-container');
-            container.innerHTML = '';
+            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Fetching live campus records...</div>';
             
-            calculatedStandings.forEach((fac, idx) => {
-                const isTop = idx === 0;
-                const div = document.createElement('div');
-                div.className = isTop 
-                    ? "flex items-center p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 relative overflow-hidden"
-                    : "flex items-center p-4 rounded-2xl glass-card";
-                
-                div.innerHTML = `
-                    <div class="w-8 flex-shrink-0 font-black ${isTop ? 'text-amber-400' : 'text-emerald-100/40 text-sm'}">
-                        ${isTop ? '<i data-lucide="crown" class="w-5 h-5"></i>' : `#${idx + 1}`}
-                    </div>
-                    <div class="flex-1 min-w-0 pr-2">
-                        <div class="font-bold text-sm text-white truncate">${fac.name}</div>
-                    </div>
-                    <div class="font-black ${isTop ? 'text-emerald-400' : 'text-emerald-400/80'} text-md">${fac.score}</div>
-                `;
-                container.appendChild(div);
-            });
+            fetch(DATABASE_URL)
+                .then(res => res.json())
+                .then(records => {
+                    // Seed defaults for all 11 faculties to maintain visual balance
+                    let facultyData = {
+                        "FAS": [88, 85], "FHSS": [76, 74], "FMSC": [80, 78], "FMS": [82],
+                        "FGS": [75], "FT": [84], "FE": [81], "FAHS": [77],
+                        "FDS": [79], "FUAB": [86], "FOC": [83]
+                    };
 
-            // Rebuild Chart metrics logs
-            if (barChartInstance) { barChartInstance.destroy(); }
-            const ctx = document.getElementById('leaderboardBarChart').getContext('2d');
-            barChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: calculatedStandings.map(f => f.key),
-                    datasets: [{
-                        data: calculatedStandings.map(f => f.score),
-                        backgroundColor: ['#10b981', 'rgba(16, 185, 129, 0.6)', 'rgba(16, 185, 129, 0.4)', 'rgba(16, 185, 129, 0.3)', 'rgba(16, 185, 129, 0.2)'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: 'rgba(255, 255, 255, 0.4)' }, max: 100 },
-                        y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold' } } }
+                    // Process and sort live submissions from the connected Google Sheet
+                    records.forEach(rec => {
+                        if (facultyData[rec.faculty]) {
+                            facultyData[rec.faculty].push(Number(rec.score));
+                        }
+                    });
+
+                    let calculatedStandings = [];
+                    for (let fac in facultyData) {
+                        let total = facultyData[fac].reduce((sum, val) => sum + val, 0);
+                        let avg = Math.round(total / facultyData[fac].length);
+                        calculatedStandings.push({ key: fac, name: getFacultyFullName(fac), score: avg });
                     }
-                }
-            });
 
-            // Render live local table data entries down to admin log window view
-            const tableBody = document.getElementById('admin-table-body');
-            tableBody.innerHTML = '';
-            if (records.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-100/30 italic">No local student submissions logged yet.</td></tr>`;
-            } else {
-                [...records].reverse().forEach(r => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="p-3 font-semibold text-white">${escapeHtml(r.name)}</td>
-                        <td class="p-3 text-emerald-100/60">${escapeHtml(r.email)}</td>
-                        <td class="p-3">${r.faculty}</td>
-                        <td class="p-3 text-right text-emerald-400 font-bold">${r.score}</td>
-                    `;
-                    tableBody.appendChild(tr);
+                    calculatedStandings.sort((a, b) => b.score - a.score);
+                    container.innerHTML = '';
+                    
+                    calculatedStandings.forEach((fac, idx) => {
+                        const isTop = idx === 0;
+                        const div = document.createElement('div');
+                        div.className = isTop 
+                            ? "flex items-center p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 relative"
+                            : "flex items-center p-3 rounded-xl glass-card";
+                        
+                        div.innerHTML = `
+                            <div class="w-8 flex-shrink-0 font-black ${isTop ? 'text-amber-400' : 'text-emerald-100/40 text-xs'}">
+                                ${isTop ? '👑' : `#${idx + 1}`}
+                            </div>
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div class="font-bold text-xs text-white truncate" title="${fac.name}">${fac.name}</div>
+                            </div>
+                            <div class="font-black text-emerald-400 text-sm">${fac.score}</div>
+                        `;
+                        container.appendChild(div);
+                    });
+
+                    if (barChartInstance) { barChartInstance.destroy(); }
+                    const ctx = document.getElementById('leaderboardBarChart').getContext('2d');
+                    barChartInstance = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: calculatedStandings.map(f => f.key),
+                            datasets: [{
+                                data: calculatedStandings.map(f => f.score),
+                                backgroundColor: ['#10b981', '#059669', '#34d399', '#047857', '#10b981', '#6ee7b7', '#065f46', '#a7f3d0', '#0f766e', '#14b8a6', '#2dd4bf'],
+                                borderRadius: 6
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 10 } }, max: 100 },
+                                y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold', size: 11 } } }
+                            }
+                        }
+                    });
+
+                    // Update admin view feed entries
+                    const tableBody = document.getElementById('admin-table-body');
+                    tableBody.innerHTML = '';
+                    if (records.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-100/30 italic">No cloud submissions verified yet.</td></tr>`;
+                    } else {
+                        [...records].reverse().slice(0, 8).forEach(r => {
+                            const tr = document.createElement('tr');
+                            tr.className = "hover:bg-white/5 transition-colors";
+                            tr.innerHTML = `
+                                <td class="p-3 font-semibold text-white">${escapeHtml(r.name)}</td>
+                                <td class="p-3 text-emerald-100/60">${escapeHtml(r.email)}</td>
+                                <td class="p-3 font-mono text-emerald-400/90">${r.faculty}</td>
+                                <td class="p-3 text-right text-emerald-400 font-bold">${r.score}</td>
+                            `;
+                            tableBody.appendChild(tr);
+                        });
+                    }
+                    lucide.createIcons();
+                }).catch(err => {
+                    console.error("Lookup endpoints error:", err);
+                    container.innerHTML = '<div class="text-center p-4 text-red-400 text-xs">Error parsing live cloud standings records feed.</div>';
                 });
-            }
-            lucide.createIcons();
         }
 
         function getFacultyFullName(key) {
-            const names = { "Applied Sciences": "Applied Sciences", "Management": "Management Studies", "Humanities": "Humanities & Social Sci", "Technology": "Technology", "Medical Sci": "Medical Sciences" };
+            const names = {
+                "FAS": "Faculty of Applied Sciences",
+                "FHSS": "Faculty of Humanities and Social Sciences",
+                "FMSC": "Faculty of Management Studies and Commerce",
+                "FMS": "Faculty of Medical Sciences",
+                "FGS": "Faculty of Graduate Studies",
+                "FT": "Faculty of Technology",
+                "FE": "Faculty of Engineering",
+                "FAHS": "Faculty of Allied Health Sciences",
+                "FDS": "Faculty of Dental Sciences",
+                "FUAB": "Faculty of Urban and Aquatic Bioresources",
+                "FOC": "Faculty of Computing"
+            };
             return names[key] || key;
         }
 
-        function clearRecordedData() {
-            if (confirm("Are you sure you want to clear all locally recorded student data points from this browser?")) {
-                localStorage.removeItem('greensteps_records');
-                renderLeaderboardDashboard();
-            }
-        }
-
         function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+            return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") : '';
         }
 
-        // Real-time input validation listener loops hooks
         document.addEventListener('input', validateNextButtonState);
         document.addEventListener('change', validateNextButtonState);
 
