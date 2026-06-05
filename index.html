@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GreenSteps USJ - Measure. Compete. Go Green.</title>
     
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2canvas for capturing perfect PNG layouts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         body {
@@ -58,15 +63,18 @@
 
         .hidden-view { display: none !important; }
 
-        /* Social Share Hover Effects */
-        .btn-wa:hover { background-color: #25D366; color: white; border-color: #25D366; }
-        .btn-fb:hover { background-color: #1877F2; color: white; border-color: #1877F2; }
-        .btn-li:hover { background-color: #0A66C2; color: white; border-color: #0A66C2; }
-        .btn-ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border-color: transparent; }
+        /* Poster Aspect Grid Background */
+        .poster-bg {
+            background-color: #050b07;
+            background-image: 
+                linear-gradient(135deg, #022c22 0%, #040806 100%),
+                radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.15), transparent 60%);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
+    <!-- Nav Bar -->
     <nav class="border-b border-white/5 bg-black/20 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
@@ -83,6 +91,7 @@
 
     <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col justify-center">
         
+        <!-- ================= 1. HOME VIEW ================= -->
         <section id="view-home" class="text-center py-12">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8 border-emerald-500/20">
                 <i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i>
@@ -104,6 +113,7 @@
             </div>
         </section>
 
+        <!-- ================= 2. ASSESSMENT VIEW ================= -->
         <section id="view-assessment" class="max-w-2xl w-full mx-auto hidden-view">
             <div class="mb-8">
                 <div class="flex justify-between text-sm font-medium mb-2 text-emerald-100/60">
@@ -117,6 +127,7 @@
 
             <div class="glass-card p-6 md:p-8 rounded-3xl">
                 
+                <!-- STEP 1: Your Profile -->
                 <div id="form-step-0" class="step-content space-y-5">
                     <h3 class="text-xl font-bold text-white flex items-center gap-2">
                         <i data-lucide="user" class="text-emerald-400 w-5 h-5"></i> Your Profile
@@ -153,6 +164,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 2: Transport -->
                 <div id="form-step-1" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-white">What is your primary mode of university commuting?</h3>
@@ -177,6 +189,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 3: Energy & AC -->
                 <div id="form-step-2" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-white">Time of electronic device use daily?</h3>
@@ -196,6 +209,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 4: Material & Waste -->
                 <div id="form-step-3" class="step-content space-y-6 hidden-view">
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-white">Single-use plastic bottles/cups used weekly?</h3>
@@ -226,6 +240,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 5: Eco Actions -->
                 <div id="form-step-4" class="step-content space-y-6 hidden-view">
                     <div>
                         <h3 class="text-xl font-bold text-white mb-1">Verify your ongoing green actions:</h3>
@@ -271,6 +286,7 @@
                     </div>
                 </div>
 
+                <!-- Navigation Controls -->
                 <div class="mt-8 pt-4 border-t border-white/5 flex justify-between">
                     <button id="btn-back" onclick="navigateStep(-1)" class="h-11 px-5 rounded-full border border-white/10 hover:bg-white/5 font-semibold text-sm inline-flex items-center gap-2 transition-all">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
@@ -282,6 +298,7 @@
             </div>
         </section>
 
+        <!-- ================= 3. RESULTS VIEW ================= -->
         <section id="view-results" class="space-y-8 hidden-view">
             <div class="text-center max-w-xl mx-auto">
                 <div class="inline-block p-4 rounded-3xl bg-white/5 border border-white/10 mb-4">
@@ -290,12 +307,13 @@
                 <h2 class="text-emerald-100/60 text-lg font-medium mb-1"><span id="display-nickname" class="text-emerald-400 font-bold">Student</span>, your footprint calculates to:</h2>
                 <h1 id="res-badge-name" class="text-4xl md:text-5xl font-black text-emerald-400 tracking-tight mb-4">Eco Beginner Badge</h1>
                 <p class="text-sm text-emerald-100/60 leading-relaxed">
-                    Your assessment has been mapped and securely submitted to the university database.
+                    Your data has been calculated. Generate your official graphical poster below to share across your socials!
                 </p>
             </div>
 
+            <!-- RESULTS METRICS PANELS -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col items-center justify-center relative overflow-hidden text-center">
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col items-center justify-center text-center">
                     <h3 class="text-md font-medium text-emerald-100/50 mb-2">Calculated Green Score</h3>
                     <div class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
                         <span id="res-green-score">0</span>/100
@@ -305,36 +323,64 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col relative">
-                    <h3 class="text-md font-medium text-emerald-100/50 mb-4">Carbon Footprint Balance</h3>
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center">
+                    <h3 class="text-md font-medium text-emerald-100/50 mb-4 text-center">Carbon Footprint Balance</h3>
                     <div class="w-full h-44 flex items-center justify-center">
                         <canvas id="carbonPieChart" class="max-h-full"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card p-6 rounded-3xl text-center space-y-4 border-emerald-500/20 bg-emerald-500/5">
-                <h3 class="text-lg font-bold text-white flex items-center justify-center gap-2">
-                    <i data-lucide="share-2" class="text-emerald-400 w-5 h-5"></i> Share Your Impact
-                </h3>
-                <p class="text-xs text-emerald-100/70 mb-4 max-w-md mx-auto">Challenge your friends and help your faculty rise on the leaderboard by sharing your official badge!</p>
-                
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button onclick="shareWhatsApp()" class="btn-wa flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
-                        <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
-                    </button>
-                    <button onclick="shareFacebook()" class="btn-fb flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
-                        <i data-lucide="facebook" class="w-4 h-4"></i> Facebook
-                    </button>
-                    <button onclick="shareLinkedIn()" class="btn-li flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
-                        <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                    </button>
-                    <button onclick="shareInstagramNative()" class="btn-ig flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
-                        <i data-lucide="instagram" class="w-4 h-4"></i> Share / IG
+            <!-- INTERACTIVE SCREENSHOT GENERATION PANEL -->
+            <div class="glass-card p-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/5 space-y-6">
+                <div class="text-center max-w-md mx-auto">
+                    <h3 class="text-xl font-bold text-white flex items-center justify-center gap-2">
+                        <i data-lucide="image" class="text-emerald-400 w-5 h-5"></i> Official Graphical Share Post
+                    </h3>
+                    <p class="text-xs text-emerald-100/60 mt-1">This card is custom styled as a graphical poster. Click download to get a clean PNG for Instagram Stories, Facebook, WhatsApp or LinkedIn.</p>
+                </div>
+
+                <!-- TARGET EXPORT POSTER CANVAS CARD -->
+                <div class="flex justify-center">
+                    <div id="capture-poster-card" class="poster-bg w-full max-w-[360px] aspect-[4/5] rounded-3xl p-6 border-2 border-emerald-400/30 shadow-2xl flex flex-col justify-between text-center relative overflow-hidden">
+                        <!-- Top Header Brand -->
+                        <div>
+                            <div class="text-[10px] font-bold text-emerald-400 tracking-[0.25em] uppercase">GreenSteps USJ Standings</div>
+                            <div class="text-[11px] text-white/40 mt-0.5" id="poster-faculty-tag">Faculty of Applied Sciences</div>
+                        </div>
+
+                        <!-- Main Graphic Badge Node -->
+                        <div class="my-auto py-4 space-y-3">
+                            <div id="poster-badge-emoji" class="text-6xl drop-shadow-[0_10px_20px_rgba(16,185,129,0.3)]">🌱</div>
+                            <div>
+                                <div class="text-[10px] text-white/50 uppercase tracking-widest">Achieved Status</div>
+                                <div id="poster-badge-title" class="text-2xl font-black text-white tracking-tight mt-0.5">Eco Hero</div>
+                            </div>
+                        </div>
+
+                        <!-- Score Footprint Footnote -->
+                        <div class="border-t border-white/10 pt-4 bg-black/20 -mx-6 -mb-6 p-5 flex items-center justify-between">
+                            <div class="text-left">
+                                <div id="poster-student-name" class="text-xs font-bold text-white truncate max-w-[150px]">Student Name</div>
+                                <div class="text-[9px] text-white/40 tracking-wider">sustainability.sjp.ac.lk</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[8px] uppercase font-bold text-emerald-400 tracking-wider">Green Index</div>
+                                <div class="text-2xl font-black text-white leading-none mt-0.5"><span id="poster-score-value">92</span><span class="text-xs text-white/50 font-normal">/100</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Action Engine Hooks -->
+                <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-sm mx-auto">
+                    <button onclick="downloadPosterPNG()" class="w-full h-12 rounded-xl bg-white hover:bg-neutral-200 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download Share PNG
                     </button>
                 </div>
             </div>
 
+            <!-- Recommendations -->
             <div class="glass-card p-6 md:p-8 rounded-3xl">
                 <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
                     <i data-lucide="alert-circle" class="text-emerald-400 w-5 h-5"></i> Targeted Sustainability Strategies
@@ -352,6 +398,7 @@
             </div>
         </section>
 
+        <!-- ================= 4. LEADERBOARD VIEW ================= -->
         <section id="view-leaderboard" class="space-y-8 hidden-view">
             <div class="text-center max-w-xl mx-auto mb-4">
                 <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl mb-4 text-emerald-400">
@@ -363,7 +410,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-1 space-y-3 max-h-[500px] overflow-y-auto pr-1" id="faculty-list-container">
-                    <div class="text-center p-4 text-emerald-100/40 italic">Loading university ranks...</div>
+                    <div class="text-center p-4 text-emerald-100/40 italic">Loading standings...</div>
                 </div>
                 <div class="lg:col-span-2 glass-card p-6 rounded-3xl min-h-[400px] flex flex-col justify-between">
                     <h3 class="text-md font-bold text-white mb-4">Inter-Faculty Environmental Index</h3>
@@ -376,6 +423,7 @@
 
     </main>
 
+    <!-- Footer Accreditation Branding -->
     <footer class="border-t border-white/5 py-6 bg-black/40 text-center text-xs">
         <div class="inline-flex items-center gap-2 font-bold tracking-widest text-emerald-500/80 uppercase">
             <i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i>
@@ -383,6 +431,7 @@
         </div>
     </footer>
 
+    <!-- Javascript Controller -->
     <script>
         let currentStep = 0;
         const totalSteps = 5; 
@@ -390,10 +439,7 @@
         let barChartInstance = null;
         let emailIsValid = false;
 
-        // Global Data to populate social sharing links
-        let globalShareData = { score: 0, badge: "", url: window.location.href };
-
-        // EXACT DB URL PROVIDED
+        // GOOGLE SHEET APP SCRIPT REDIRECT LOCK
         const DATABASE_URL = "https://script.google.com/macros/s/AKfycby10P54Fm_1ow7YzBr2M0dGp13zbsfcC8ghyhsQ-mo32uy0DzJ5kpZMbs_ev_mGs4pR/exec";
 
         function showView(viewId) {
@@ -417,7 +463,6 @@
             emailInput.value = '';
             emailInput.style.borderColor = "";
             document.getElementById('email-error-msg').classList.add('hidden');
-
             document.getElementById('student-faculty').value = '';
             
             const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
@@ -469,16 +514,11 @@
 
         function navigateStep(direction) {
             if (direction === 1 && !validateStepSelection()) {
-                if (currentStep === 0 && !emailIsValid && document.getElementById('student-email').value !== "") {
-                    alert("Please fix your email address format to advance.");
-                } else {
-                    alert("Please select an answer for all questions visible on this page.");
-                }
+                alert("Please complete all inputs fields and select answers properly on this page.");
                 return;
             }
             
             currentStep += direction;
-            
             if (currentStep >= totalSteps) {
                 calculateGreenIndexResults();
             } else if (currentStep < 0) {
@@ -522,7 +562,6 @@
             const email = document.getElementById('student-email').value.trim();
             const faculty = document.getElementById('student-faculty').value;
 
-            // BASE CALCULATION MATHEMATICS
             let baselineScore = 100;
 
             const transport = document.querySelector('input[name="transport"]:checked').value;
@@ -560,24 +599,19 @@
 
             const finalGreenScore = Math.max(0, Math.min(100, baselineScore));
 
-            // Transmit Securely
-            console.info("Sending record to Google Drive database...");
+            // Remote Storage Submission
             fetch(DATABASE_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, faculty, score: finalGreenScore })
-            }).then(() => {
-                console.info("Drive submission executed successfully.");
-            }).catch(err => {
-                console.warn("Could not connect to Drive endpoint. Result processed locally.", err);
-            });
+            }).catch(e => console.log("Local development sync mode flag bypass active."));
 
             document.getElementById('display-nickname').innerText = name;
-            renderResultsDashboard(finalGreenScore, { transport, ac, plastic, wrapping, recycle });
+            renderResultsDashboard(finalGreenScore, faculty, name, { transport, ac, plastic, wrapping, recycle });
         }
 
-        function renderResultsDashboard(green, answers) {
+        function renderResultsDashboard(green, faculty, name, answers) {
             document.getElementById('res-green-score').innerText = green;
             document.getElementById('res-green-bar').style.width = `${green}%`;
 
@@ -586,36 +620,28 @@
             else if (green >= 64) rank = { name: "Carbon Saver", icon: "🍃", color: "text-lime-400" };
             else if (green >= 45) rank = { name: "Green Explorer", icon: "🧭", color: "text-green-400" };
 
-            // Set Global Share Data for Social Network Buttons
-            globalShareData.score = green;
-            globalShareData.badge = rank.name;
-
             document.getElementById('res-badge-icon').innerText = rank.icon;
             document.getElementById('res-badge-name').innerText = `${rank.name} Badge`;
             document.getElementById('res-badge-name').className = `text-4xl md:text-5xl font-black tracking-tight mb-4 ${rank.color}`;
+
+            // Populate Graphical Screenshot Card elements dynamically
+            document.getElementById('poster-faculty-tag').innerText = faculty;
+            document.getElementById('poster-badge-emoji').innerText = rank.icon;
+            document.getElementById('poster-badge-title').innerText = rank.name;
+            document.getElementById('poster-student-name').innerText = name;
+            document.getElementById('poster-score-value').innerText = green;
 
             const tipsContainer = document.getElementById('res-tips-list');
             tipsContainer.innerHTML = '';
             
             let recommendations = [];
-            if (['car', 'motorbike', 'tuktuk'].includes(answers.transport)) {
-                recommendations.push("Opt for standard public transit options or walk shorter distances to reduce transport carbon footprint.");
-            }
-            if (answers.ac === 'yes') {
-                recommendations.push("Regulate air conditioning hours. Switch to natural ventilation during mild weather windows.");
-            }
-            if (['6-10', '>10'].includes(answers.plastic)) {
-                recommendations.push("Your single-use plastic consumption is high. Transition to reusable water bottles across university stations.");
-            }
-            if (answers.wrapping === 'daily' || answers.wrapping === 'sometimes') {
-                recommendations.push("Reduce takeaway packaging waste. Bring your own reusable lunch containers to university canteens.");
-            }
-            if (answers.recycle !== 'yes') {
-                recommendations.push("Separate your waste. Utilize the color-coded recycling collection bins placed around the university.");
-            }
-            if (recommendations.length === 0) {
-                recommendations.push("Outstanding sustainable practices! Share your eco habits to inspire your peers across the university.");
-            }
+            if (['car', 'motorbike', 'tuktuk'].includes(answers.transport)) recommendations.push("Switch to public transits or alternative vehicle pooling mechanics.");
+            if (answers.ac === 'yes') recommendations.push("Optimise air-conditioning usage metrics inside laboratories and dorm lines.");
+            if (['6-10', '>10'].includes(answers.plastic)) recommendations.push("Decline high-frequency single-use plastics across university cafes.");
+            if (answers.wrapping === 'daily' || answers.wrapping === 'sometimes') recommendations.push("Bring own canvas bag units and clean plastic storage boxes for standard dining items.");
+            if (answers.recycle !== 'yes') recommendations.push("Actively engage with the segregation bins mapped on campus layout slots.");
+
+            if (recommendations.length === 0) recommendations.push("Stellar profile metrics! Keep up the work and advocate to other students.");
 
             recommendations.forEach(tip => {
                 const li = document.createElement('li');
@@ -648,49 +674,31 @@
             lucide.createIcons();
         }
 
-        // ================= SOCIAL SHARING LOGIC =================
-        function generateShareText() {
-            return `I just calculated my Environmental Footprint at USJ! 🌿 I scored ${globalShareData.score}/100 and earned the ${globalShareData.badge} Badge. Measure yours and help our faculty rise on the GreenSteps Leaderboard!`;
-        }
-
-        function shareWhatsApp() {
-            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(generateShareText() + " \n\nPlay here: " + globalShareData.url)}`;
-            window.open(url, '_blank');
-        }
-
-        function shareFacebook() {
-            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(globalShareData.url)}&quote=${encodeURIComponent(generateShareText())}`;
-            window.open(url, '_blank');
-        }
-
-        function shareLinkedIn() {
-            const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(generateShareText() + " \n\n" + globalShareData.url)}`;
-            window.open(url, '_blank');
-        }
-
-        function shareInstagramNative() {
-            const textToShare = generateShareText();
-            // Attempt to trigger native mobile share menu (perfect for IG/Stories on phones)
-            if (navigator.share) {
-                navigator.share({
-                    title: 'GreenSteps USJ',
-                    text: textToShare,
-                    url: globalShareData.url
-                }).catch((error) => console.log('Error sharing', error));
-            } else {
-                // Fallback for Desktop: Copy to Clipboard
-                navigator.clipboard.writeText(textToShare + " " + globalShareData.url).then(() => {
-                    alert("Text copied to clipboard! Open Instagram or any app to paste and share your score.");
-                });
-            }
+        // ================= GRAPHICAL POST EXPORT HOOK =================
+        function downloadPosterPNG() {
+            const element = document.getElementById('capture-poster-card');
+            
+            // HTML2Canvas compiles the CSS rendering layout tree to output a raw PNG stream safely
+            html2canvas(element, {
+                scale: 3, // Boosts resolution to crystal clear HD for high-density smartphone screens
+                backgroundColor: null,
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `GreenSteps_USJ_Badge_${document.getElementById('poster-student-name').innerText}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                alert("Error compilation engine block. Please take standard manual screenshot share configuration directly.");
+            });
         }
 
         // ================= LEADERBOARD LOGIC =================
         function renderLeaderboardDashboard() {
             const container = document.getElementById('faculty-list-container');
-            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Fetching live university records...</div>';
+            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Syncing standings matrix logs...</div>';
             
-            // Core Default Fallback Arrays 
             let facultyData = {
                 "Faculty of Applied Sciences": [94, 92, 95],
                 "Faculty of Management Studies and Commerce": [86, 88, 85],
@@ -721,15 +729,7 @@
                     calculatedStandings.push({ key: fac, name: fac.replace("Faculty of ", ""), score: avg });
                 }
 
-                // Apply Strict Sorting Locks
-                calculatedStandings.sort((a, b) => {
-                    if (a.key === 'Faculty of Applied Sciences') return -1;
-                    if (b.key === 'Faculty of Applied Sciences') return 1;
-                    if (a.key === 'Faculty of Management Studies and Commerce') return -1;
-                    if (b.key === 'Faculty of Management Studies and Commerce') return 1;
-                    return b.score - a.score;
-                });
-
+                calculatedStandings.sort((a, b) => b.score - a.score);
                 container.innerHTML = '';
                 
                 calculatedStandings.forEach((fac, idx) => {
@@ -782,17 +782,10 @@
                 });
             };
 
-            console.info("Fetching Drive Database...");
             fetch(DATABASE_URL)
                 .then(res => res.json())
-                .then(records => {
-                    console.info("Drive connection successful.");
-                    processAndDraw(records);
-                })
-                .catch(err => {
-                    console.warn("Drive connection timed out or blocked. Loading custom local values.", err);
-                    processAndDraw([]);
-                });
+                .then(records => processAndDraw(records))
+                .catch(err => processAndDraw([]));
         }
 
         document.addEventListener('input', validateNextButtonState);
