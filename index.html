@@ -3,727 +3,750 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USJ University Sustainability Index</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>GreenSteps USJ - Measure. Compete. Go Green.</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #060c08 0%, #0c1a10 50%, #050f09 100%);
-            color: #f3f4f6;
-            min-height: 100vh;
+            background-color: #040806;
+            color: #f0fdf4;
+            background-image: 
+                radial-gradient(circle at top right, rgba(22, 163, 74, 0.09), transparent 45%),
+                radial-gradient(circle at bottom left, rgba(22, 163, 74, 0.06), transparent 45%);
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
         }
 
-        .glass-panel {
+        .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        /* Custom Scrollbar for Leaderboard list */
-        .custom-scroll::-webkit-scrollbar {
-            width: 6px;
+        .glass-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
         }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.01);
-            border-radius: 10px;
+        
+        .glass-input:focus {
+            border-color: #10b981;
+            outline: none;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
         }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+
+        /* BULLETPROOF BUTTON CSS FIX */
+        input[type="radio"]:checked + label {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.15) !important;
+            color: #ffffff !important;
         }
-        .custom-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(16, 185, 129, 0.3);
+
+        input[type="checkbox"]:checked + label {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
         }
+
+        input[type="checkbox"]:checked + label .check-box {
+            background-color: #10b981;
+            border-color: #10b981;
+            color: #000;
+        }
+
+        .hidden-view { display: none !important; }
     </style>
 </head>
-<body class="flex flex-col justify-between overflow-x-hidden antialiased">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none z-0 animate-pulse"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
-
-    <main class="w-full max-w-4xl mx-auto px-4 pt-10 pb-6 flex-grow flex flex-col justify-center z-10">
-        
-        <div id="view-home" class="view-section text-center space-y-8 py-8">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mx-auto">
-                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                USJ Sustainability Initiative
+    <nav class="border-b border-white/5 bg-black/20 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
+                <i data-lucide="leaf" class="text-emerald-400 w-6 h-6"></i>
+                <span class="font-bold text-xl tracking-tight text-white">GreenSteps <span class="text-emerald-400">USJ</span></span>
             </div>
-            
-            <div class="space-y-4">
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-white via-neutral-200 to-emerald-400 bg-clip-text text-transparent">
-                    Measure Your<br>Ecological Footprint
-                </h1>
-                <p class="text-neutral-400 text-sm md:text-md max-w-lg mx-auto leading-relaxed">
-                    Evaluate your routine daily patterns, discover customized mitigation strategies, and contribute points towards your faculty standing.
+            <div class="flex gap-6 text-sm font-medium">
+                <button onclick="showView('home')" class="hover:text-emerald-400 transition-colors">Home</button>
+                <button onclick="startAssessment()" class="hover:text-emerald-400 transition-colors">Calculator</button>
+                <button onclick="showView('leaderboard')" class="hover:text-emerald-400 transition-colors">Leaderboard</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col justify-center">
+        
+        <section id="view-home" class="text-center py-12">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8 border-emerald-500/20">
+                <i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">University Sustainability Program</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-white leading-tight">
+                Measure. Compete. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Go Green.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-emerald-100/70 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Enter your details, calculate your university carbon footprint score in under a minute, and lift your faculty on the live standings leaderboard.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <button onclick="startAssessment()" class="w-full sm:w-auto text-lg h-14 px-8 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2">
+                    Start Assessment <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+                <button onclick="showView('leaderboard')" class="w-full sm:w-auto text-lg h-14 px-8 rounded-full glass-card hover:bg-white/5 font-semibold text-white transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="trophy" class="w-5 h-5 text-amber-400"></i> View Leaderboard
+                </button>
+            </div>
+        </section>
+
+        <section id="view-assessment" class="max-w-2xl w-full mx-auto hidden-view">
+            <div class="mb-8">
+                <div class="flex justify-between text-sm font-medium mb-2 text-emerald-100/60">
+                    <span id="step-indicator">Step 1 of 5: Your Profile</span>
+                    <span id="step-percentage" class="text-emerald-400">20%</span>
+                </div>
+                <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-300" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 rounded-3xl">
+                
+                <div id="form-step-0" class="step-content space-y-5">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i data-lucide="user" class="text-emerald-400 w-5 h-5"></i> Your Profile
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">Full Name / Nickname</label>
+                            <input type="text" id="student-name" placeholder="Enter your name" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">University Email Address</label>
+                            <input type="email" id="student-email" oninput="validateEmailRealtime()" placeholder="student@sjp.ac.lk" class="w-full h-12 px-4 rounded-xl glass-input text-sm">
+                            <p id="email-error-msg" class="text-xs text-red-500 mt-1.5 hidden flex items-center gap-1">
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Incorrect email format! Ensure it contains '@'.
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-emerald-100/60 uppercase tracking-wider mb-2">Select Your Faculty</label>
+                            <select id="student-faculty" class="w-full h-12 px-4 rounded-xl glass-input text-sm appearance-none cursor-pointer">
+                                <option value="" disabled selected class="bg-neutral-900">Choose your faculty...</option>
+                                <option value="Faculty of Applied Sciences">Faculty of Applied Sciences</option>
+                                <option value="Faculty of Humanities and Social Sciences">Faculty of Humanities and Social Sciences</option>
+                                <option value="Faculty of Management Studies and Commerce">Faculty of Management Studies and Commerce</option>
+                                <option value="Faculty of Medical Sciences">Faculty of Medical Sciences</option>
+                                <option value="Faculty of Graduate Studies">Faculty of Graduate Studies</option>
+                                <option value="Faculty of Technology">Faculty of Technology</option>
+                                <option value="Faculty of Engineering">Faculty of Engineering</option>
+                                <option value="Faculty of Allied Health Sciences">Faculty of Allied Health Sciences</option>
+                                <option value="Faculty of Dental Sciences">Faculty of Dental Sciences</option>
+                                <option value="Faculty of Urban and Aquatic Bioresources">Faculty of Urban and Aquatic Bioresources</option>
+                                <option value="Faculty of Computing">Faculty of Computing</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-step-1" class="step-content space-y-6 hidden-view">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">What is your primary mode of university commuting?</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div>
+                                <input type="radio" name="transport" value="walk" id="t-walk" class="hidden">
+                                <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Walk</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="transport" value="bicycle" id="t-bike" class="hidden">
+                                <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Bicycle</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="transport" value="bus" id="t-bus" class="hidden">
+                                <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Public Bus</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="transport" value="train" id="t-train" class="hidden">
+                                <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Train</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="transport" value="motorbike" id="t-moto" class="hidden">
+                                <label for="t-moto" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Motorbike</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="transport" value="tuktuk" id="t-tuk" class="hidden">
+                                <label for="t-tuk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Tuk Tuk</label>
+                            </div>
+                            <div class="col-span-2 sm:col-span-3">
+                                <input type="radio" name="transport" value="car" id="t-car" class="hidden">
+                                <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Private Car</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-xl font-bold text-white">Estimated total daily travel distance?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <input type="radio" name="distance" value="<5" id="d-1" class="hidden">
+                                <label for="d-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 5 km</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="distance" value="5-15" id="d-2" class="hidden">
+                                <label for="d-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">5 - 15 km</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="distance" value="15-30" id="d-3" class="hidden">
+                                <label for="d-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">15 - 30 km</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="distance" value=">30" id="d-4" class="hidden">
+                                <label for="d-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 30 km</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-step-2" class="step-content space-y-6 hidden-view">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Time of electronic device use daily?</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <input type="radio" name="device" value="<3" id="dev-1" class="hidden">
+                                <label for="dev-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 3 hours</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="device" value="3-6" id="dev-2" class="hidden">
+                                <label for="dev-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">3 - 6 hours</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="device" value="6-10" id="dev-3" class="hidden">
+                                <label for="dev-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">6 - 10 hours</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="device" value=">10" id="dev-4" class="hidden">
+                                <label for="dev-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 10 hours</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-xl font-bold text-white">Do you regularly use Air Conditioning (AC)?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <input type="radio" name="ac" value="yes" id="ac-y" class="hidden">
+                                <label for="ac-y" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Yes</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="ac" value="no" id="ac-n" class="hidden">
+                                <label for="ac-n" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-step-3" class="step-content space-y-6 hidden-view">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Single-use plastic bottles/cups used weekly?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><input type="radio" name="plastic" value="0-2" id="p-1" class="hidden"><label for="p-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">0 - 2 items</label></div>
+                            <div><input type="radio" name="plastic" value="3-5" id="p-2" class="hidden"><label for="p-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">3 - 5 items</label></div>
+                            <div><input type="radio" name="plastic" value="6-10" id="p-3" class="hidden"><label for="p-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">6 - 10 items</label></div>
+                            <div><input type="radio" name="plastic" value=">10" id="p-4" class="hidden"><label for="p-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 10</label></div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-xl font-bold text-white">How often do you buy meals with plastic wrap/lunch sheets?</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div><input type="radio" name="wrapping" value="never" id="w-n" class="hidden"><label for="w-n" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Rarely / Never</label></div>
+                            <div><input type="radio" name="wrapping" value="sometimes" id="w-s" class="hidden"><label for="w-s" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Sometimes</label></div>
+                            <div><input type="radio" name="wrapping" value="daily" id="w-d" class="hidden"><label for="w-d" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Almost Daily</label></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-4">
+                        <h3 class="text-xl font-bold text-white">Do you actively sort/recycle waste?</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div><input type="radio" name="recycle" value="yes" id="r-y" class="hidden"><label for="r-y" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Yes</label></div>
+                            <div><input type="radio" name="recycle" value="sometimes" id="r-s" class="hidden"><label for="r-s" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Sometimes</label></div>
+                            <div><input type="radio" name="recycle" value="no" id="r-n" class="hidden"><label for="r-n" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">No</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-step-4" class="step-content space-y-6 hidden-view">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-1">Verify your ongoing green actions:</h3>
+                        <p class="text-emerald-100/50 text-xs mb-4">Select all actions you regularly practice to improve your final score.</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <input type="checkbox" name="actions" value="bottle" id="act-bottle" class="hidden">
+                                <label for="act-bottle" class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                    <div class="check-box w-5 h-5 rounded border border-white/20 flex items-center justify-center text-transparent font-bold text-xs">✓</div>
+                                    <span class="text-sm font-medium text-white">Use own reusable flask</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="actions" value="public" id="act-public" class="hidden">
+                                <label for="act-public" class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                    <div class="check-box w-5 h-5 rounded border border-white/20 flex items-center justify-center text-transparent font-bold text-xs">✓</div>
+                                    <span class="text-sm font-medium text-white">Use public transit</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="actions" value="walk" id="act-walk" class="hidden">
+                                <label for="act-walk" class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                    <div class="check-box w-5 h-5 rounded border border-white/20 flex items-center justify-center text-transparent font-bold text-xs">✓</div>
+                                    <span class="text-sm font-medium text-white">Walk short distances</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="actions" value="bag" id="act-bag" class="hidden">
+                                <label for="act-bag" class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                    <div class="check-box w-5 h-5 rounded border border-white/20 flex items-center justify-center text-transparent font-bold text-xs">✓</div>
+                                    <span class="text-sm font-medium text-white">Bring reusable bag</span>
+                                </label>
+                            </div>
+                            <div class="col-span-1 sm:col-span-2">
+                                <input type="checkbox" name="actions" value="tree" id="act-tree" class="hidden">
+                                <label for="act-tree" class="flex items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                                    <div class="check-box w-5 h-5 rounded border border-white/20 flex items-center justify-center text-transparent font-bold text-xs">✓</div>
+                                    <span class="text-sm font-medium text-white">Participate in tree planting</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-white/5 flex justify-between">
+                    <button id="btn-back" onclick="navigateStep(-1)" class="h-11 px-5 rounded-full border border-white/10 hover:bg-white/5 font-semibold text-sm inline-flex items-center gap-2 transition-all">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                    </button>
+                    <button id="btn-next" onclick="navigateStep(1)" class="h-11 px-6 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm inline-flex items-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                        Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-results" class="space-y-8 hidden-view">
+            <div class="text-center max-w-xl mx-auto">
+                <div class="inline-block p-4 rounded-3xl bg-white/5 border border-white/10 mb-4">
+                    <span id="res-badge-icon" class="text-6xl">🌱</span>
+                </div>
+                <h2 class="text-emerald-100/60 text-lg font-medium mb-1"><span id="display-nickname" class="text-emerald-400 font-bold">Student</span>, your footprint calculates to:</h2>
+                <h1 id="res-badge-name" class="text-4xl md:text-5xl font-black text-emerald-400 tracking-tight mb-4">Eco Beginner Badge</h1>
+                <p class="text-sm text-emerald-100/60 leading-relaxed">
+                    Your assessment has been mapped and securely submitted to the university database.
                 </p>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-                <button onclick="switchView('assessment')" class="w-full sm:w-auto px-8 h-14 bg-emerald-500 text-neutral-950 font-bold rounded-full hover:bg-emerald-400 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 text-base">
-                    Start Assessment
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </button>
-                <button onclick="switchView('leaderboard')" class="w-full sm:w-auto px-8 h-14 bg-neutral-900/60 text-white font-semibold rounded-full hover:bg-neutral-800 border border-white/10 transition-all cursor-pointer flex items-center justify-center gap-2 text-base">
-                    View Leaderboard
-                </button>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-12 text-left">
-                <div class="glass-panel p-6 rounded-2xl space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col items-center justify-center relative overflow-hidden text-center">
+                    <h3 class="text-md font-medium text-emerald-100/50 mb-2">Calculated Green Score</h3>
+                    <div class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+                        <span id="res-green-score">0</span>/100
                     </div>
-                    <h3 class="text-md font-bold text-white">Under 2 Minutes</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Optimized and concise questionnaire tailored for quick university routines.</p>
+                    <div class="w-full bg-white/5 rounded-full h-2.5 mt-6 overflow-hidden">
+                        <div id="res-green-bar" class="bg-gradient-to-r from-emerald-400 to-teal-400 h-full transition-all duration-1000" style="width: 0%;"></div>
+                    </div>
                 </div>
-                <div class="glass-panel p-6 rounded-2xl space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    </div>
-                    <h3 class="text-md font-bold text-white">Verified Analysis</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Aggregates emission distributions dynamically with structured carbon logic metrics.</p>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl space-y-2">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                    </div>
-                    <h3 class="text-md font-bold text-white">Faculty Honor</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Rallies scores dynamically into centralized balances representing each division.</p>
-                </div>
-            </div>
-        </div>
 
-        <div id="view-assessment" class="view-section hidden max-w-2xl mx-auto w-full py-4 space-y-6">
-            
-            <div class="space-y-2">
-                <div class="flex justify-between text-xs font-bold text-neutral-400 uppercase tracking-widest">
-                    <span id="step-title-indicator">Step 1 of 5: Your Profile</span>
-                    <span id="step-percentage-indicator" class="text-emerald-400">20%</span>
-                </div>
-                <div class="w-full h-2 bg-neutral-800/80 rounded-full overflow-hidden">
-                    <div id="step-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 w-1/5 transition-all duration-300"></div>
-                </div>
-            </div>
-
-            <div class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden">
-                <form id="assessment-form" onsubmit="event.preventDefault();">
-                    
-                    <div class="step-pane space-y-5">
-                        <h3 class="text-xl font-bold text-white mb-2">University Profile Registration</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-xs text-emerald-400 font-bold uppercase tracking-wider block mb-2">Full Name</label>
-                                <input type="text" id="input-name" placeholder="Enter your name or nickname" class="w-full h-12 px-4 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors">
-                            </div>
-                            <div>
-                                <label class="text-xs text-emerald-400 font-bold uppercase tracking-wider block mb-2">University Email Address</label>
-                                <input type="email" id="input-email" placeholder="username@sjp.ac.lk" class="w-full h-12 px-4 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors">
-                                <p id="email-validation-error" class="text-xs text-red-400 mt-2 hidden flex items-center gap-1">
-                                    ⚠️ Please enter a valid university email address structure.
-                                </p>
-                            </div>
-                            <div>
-                                <label class="text-xs text-emerald-400 font-bold uppercase tracking-wider block mb-2">Academic Faculty Division</label>
-                                <div class="relative">
-                                    <select id="select-faculty" class="w-full h-12 px-4 rounded-xl bg-neutral-900 border border-white/10 text-white text-sm appearance-none cursor-pointer outline-none focus:border-emerald-500">
-                                        <option value="" disabled selected>Select your faculty division...</option>
-                                        <option value="Faculty of Applied Sciences">Faculty of Applied Sciences</option>
-                                        <option value="Faculty of Management Studies and Commerce">Faculty of Management Studies and Commerce</option>
-                                        <option value="Faculty of Humanities and Social Sciences">Faculty of Humanities and Social Sciences</option>
-                                        <option value="Faculty of Medical Sciences">Faculty of Medical Sciences</option>
-                                        <option value="Faculty of Technology">Faculty of Technology</option>
-                                        <option value="Faculty of Engineering">Faculty of Engineering</option>
-                                        <option value="Faculty of Allied Health Sciences">Faculty of Allied Health Sciences</option>
-                                        <option value="Faculty of Dental Sciences">Faculty of Dental Sciences</option>
-                                        <option value="Faculty of Urban and Aquatic Bioresources">Faculty of Urban and Aquatic Bioresources</option>
-                                        <option value="Faculty of Computing">Faculty of Computing</option>
-                                        <option value="Faculty of Graduate Studies">Faculty of Graduate Studies</option>
-                                    </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-400">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-pane hidden space-y-6">
-                        <div class="space-y-3">
-                            <h3 class="text-xl font-bold text-white">What is your primary mode of transit?</h3>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                <input type="radio" name="transport" value="walk" id="t-walk" class="peer sr-only">
-                                <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Walking</label>
-
-                                <input type="radio" name="transport" value="bicycle" id="t-bike" class="peer sr-only">
-                                <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Bicycle</label>
-
-                                <input type="radio" name="transport" value="bus" id="t-bus" class="peer sr-only">
-                                <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Public Bus</label>
-
-                                <input type="radio" name="transport" value="train" id="t-train" class="peer sr-only">
-                                <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Train Loop</label>
-
-                                <input type="radio" name="transport" value="motorbike" id="t-bike-m" class="peer sr-only">
-                                <label for="t-bike-m" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Motorbike</label>
-
-                                <input type="radio" name="transport" value="car" id="t-car" class="peer sr-only">
-                                <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Private Car</label>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3 pt-4">
-                            <h3 class="text-xl font-bold text-white">Estimated cumulative daily transit distance?</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="distance" value="<5" id="d-1" class="peer sr-only">
-                                <label for="d-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 5 km</label>
-
-                                <input type="radio" name="distance" value="5-15" id="d-2" class="peer sr-only">
-                                <label for="d-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">5 - 15 km</label>
-
-                                <input type="radio" name="distance" value="15-30" id="d-3" class="peer sr-only">
-                                <label for="d-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">15 - 30 km</label>
-
-                                <input type="radio" name="distance" value=">30" id="d-4" class="peer sr-only">
-                                <label for="d-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 30 km</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-pane hidden space-y-6">
-                        <div class="space-y-3">
-                            <h3 class="text-xl font-semibold text-white">Daily dynamic digital device usage?</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="device" value="<3" id="dev-1" class="peer sr-only">
-                                <label for="dev-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 3 hours</label>
-
-                                <input type="radio" name="device" value="3-6" id="dev-2" class="peer sr-only">
-                                <label for="dev-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 6 hours</label>
-
-                                <input type="radio" name="device" value="6-10" id="dev-3" class="peer sr-only">
-                                <label for="dev-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 hours</label>
-
-                                <input type="radio" name="device" value=">10" id="dev-4" class="peer sr-only">
-                                <label for="dev-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 hours</label>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3 pt-4">
-                            <h3 class="text-xl font-semibold text-white">Do you consistently use Air Conditioning?</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="ac" value="yes" id="ac-yes" class="peer sr-only">
-                                <label for="ac-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
-
-                                <input type="radio" name="ac" value="no" id="ac-no" class="peer sr-only">
-                                <label for="ac-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-pane hidden space-y-6">
-                        <div class="space-y-3">
-                            <h3 class="text-xl font-semibold text-white">Single-use plastic consumption metrics (Weekly)?</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="plastic" value="0-2" id="p-1" class="peer sr-only">
-                                <label for="p-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">0 - 2 items</label>
-
-                                <input type="radio" name="plastic" value="3-5" id="p-2" class="peer sr-only">
-                                <label for="p-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 5 items</label>
-
-                                <input type="radio" name="plastic" value="6-10" id="p-3" class="peer sr-only">
-                                <label for="p-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 items</label>
-
-                                <input type="radio" name="plastic" value=">10" id="p-4" class="peer sr-only">
-                                <label for="p-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 items</label>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3 pt-4">
-                            <h3 class="text-xl font-semibold text-white">Do you segregate your waste for recycling cycles?</h3>
-                            <div class="grid grid-cols-3 gap-3">
-                                <input type="radio" name="recycle" value="yes" id="r-yes" class="peer sr-only">
-                                <label for="r-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
-
-                                <input type="radio" name="recycle" value="sometimes" id="r-some" class="peer sr-only">
-                                <label for="r-some" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Sometimes</label>
-
-                                <input type="radio" name="recycle" value="no" id="r-no" class="peer sr-only">
-                                <label for="r-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step-pane hidden space-y-4">
-                        <h3 class="text-xl font-bold text-white">Verify your active eco-habits:</h3>
-                        <p class="text-xs text-neutral-400 mb-2">Select all positive habits that apply to you. Each adds mitigation points to your score!</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="relative">
-                                <input type="checkbox" name="actions" value="bottle" id="act-bottle" class="peer sr-only">
-                                <label for="act-bottle" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
-                                    Use reusable thermal flask/bottle
-                                </label>
-                            </div>
-                            <div class="relative">
-                                <input type="checkbox" name="actions" value="public" id="act-transit" class="peer sr-only">
-                                <label for="act-transit" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
-                                    Prioritize public/collective transit
-                                </label>
-                            </div>
-                            <div class="relative">
-                                <input type="checkbox" name="actions" value="walk" id="act-walk" class="peer sr-only">
-                                <label for="act-walk" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
-                                    Walk short cross-university paths
-                                </label>
-                            </div>
-                            <div class="relative">
-                                <input type="checkbox" name="actions" value="bag" id="act-bag" class="peer sr-only">
-                                <label for="act-bag" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
-                                    Bring your own canvas shopping bag
-                                </label>
-                            </div>
-                            <div class="relative">
-                                <input type="checkbox" name="actions" value="tree" id="act-volunteer" class="peer sr-only">
-                                <label for="act-volunteer" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
-                                    Participated in environmental work
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-                <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center">
-                    <button id="btn-back" onclick="handleNavigation(-1)" class="px-6 h-11 border border-white/20 hover:bg-white/5 rounded-full text-sm font-semibold transition-all cursor-pointer text-white flex items-center gap-2">
-                        ← Back
-                    </button>
-                    <button id="btn-next" onclick="handleNavigation(1)" class="px-8 h-11 bg-emerald-500 text-neutral-950 hover:bg-emerald-400 font-bold rounded-full text-sm shadow-md transition-all cursor-pointer flex items-center gap-2">
-                        Next →
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="view-results" class="view-section hidden space-y-8 max-w-3xl mx-auto w-full py-4 text-center">
-            <div class="space-y-2">
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Your Sustainability Profile</h2>
-                <p class="text-xs md:text-sm text-neutral-400">Analysis calculated for your profile data loop.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <div class="md:col-span-7 glass-panel p-6 rounded-3xl h-72 flex items-center justify-center relative">
-                    <canvas id="results-pie-chart" class="max-h-full max-w-full"></canvas>
-                </div>
-                
-                <div class="md:col-span-5 grid grid-cols-2 md:grid-cols-1 gap-4">
-                    <div class="glass-panel p-5 rounded-2xl text-left border-l-4 border-l-emerald-500">
-                        <span class="text-xs text-neutral-400 font-semibold tracking-wider block uppercase mb-1">Eco-Efficiency (Green Score)</span>
-                        <div class="text-3xl font-black text-emerald-400"><span id="metric-green-display">0</span>/100</div>
-                    </div>
-                    <div class="glass-panel p-5 rounded-2xl text-left border-l-4 border-l-amber-500">
-                        <span class="text-xs text-neutral-400 font-semibold tracking-wider block uppercase mb-1">Carbon Footprint Index</span>
-                        <div class="text-3xl font-black text-amber-500"><span id="metric-carbon-display">0</span>/100</div>
+                <div class="glass-card p-6 md:p-8 rounded-3xl flex flex-col relative">
+                    <h3 class="text-md font-medium text-emerald-100/50 mb-4">Carbon Footprint Balance</h3>
+                    <div class="w-full h-44 flex items-center justify-center">
+                        <canvas id="carbonPieChart" class="max-h-full"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-panel p-6 rounded-3xl text-left space-y-4">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    🌿 Tailored Recommendations
+            <div class="glass-card p-6 md:p-8 rounded-3xl">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="text-emerald-400 w-5 h-5"></i> Targeted Sustainability Strategies
                 </h3>
-                <ul id="recommendations-container" class="space-y-3 text-sm text-neutral-300">
-                    </ul>
+                <ul id="res-tips-list" class="space-y-3"></ul>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
-                <button onclick="switchView('leaderboard')" class="w-full sm:w-auto px-8 h-12 bg-emerald-500 text-neutral-950 font-bold rounded-full hover:bg-emerald-400 transition-all cursor-pointer flex items-center justify-center gap-2">
-                    📊 View Leaderboard
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="showView('leaderboard')" class="h-14 px-8 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-md inline-flex items-center justify-center gap-2 transition-all shadow-lg">
+                    <i data-lucide="trophy" class="w-5 h-5"></i> View Leaderboard
                 </button>
-                <button onclick="resetAssessment()" class="w-full sm:w-auto px-8 h-12 bg-neutral-900 border border-white/10 text-white font-semibold rounded-full hover:bg-neutral-800 transition-all cursor-pointer">
-                    Retake Assessment
+                <button onclick="startAssessment()" class="h-14 px-8 rounded-full glass-card hover:bg-white/5 font-semibold text-white text-md inline-flex items-center justify-center gap-2 transition-all">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i> Retake Calculator
                 </button>
             </div>
-        </div>
+        </section>
 
-        <div id="view-leaderboard" class="view-section hidden space-y-8 py-4">
-            <div class="text-center space-y-2">
-                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">Faculty Standings</h2>
-                <p class="text-sm text-neutral-400 max-w-md mx-auto">Real-time dynamic resource ranking mapped from all student assessment submissions across the university.</p>
+        <section id="view-leaderboard" class="space-y-8 hidden-view">
+            <div class="text-center max-w-xl mx-auto mb-4">
+                <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl mb-4 text-emerald-400">
+                    <i data-lucide="trophy" class="w-8 h-8"></i>
+                </div>
+                <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Inter-Faculty Standings</h1>
+                <p class="text-sm text-emerald-100/60">Real-time ecological efficiency distribution metrics across all 11 university faculties.</p>
             </div>
 
-            <div id="leaderboard-loading-state" class="py-12 flex flex-col items-center justify-center text-neutral-400 gap-3">
-                <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin"></div>
-                <span class="text-xs font-semibold tracking-wider uppercase">Syncing university metrics...</span>
-            </div>
-
-            <div id="leaderboard-content-workspace" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start hidden">
-                <div id="leaderboard-rows-target" class="lg:col-span-5 space-y-3 max-h-[420px] overflow-y-auto pr-2 custom-scroll">
-                    </div>
-
-                <div class="lg:col-span-7 glass-panel p-6 rounded-3xl h-[420px] flex flex-col justify-between">
-                    <h3 class="text-md font-bold text-white mb-2">Faculty Index Comparison</h3>
-                    <div class="flex-grow relative h-full w-full">
-                        <canvas id="leaderboard-bar-chart"></canvas>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1 space-y-3 max-h-[500px] overflow-y-auto pr-1" id="faculty-list-container">
+                    <div class="text-center p-4 text-emerald-100/40 italic">Loading university ranks...</div>
+                </div>
+                <div class="lg:col-span-2 glass-card p-6 rounded-3xl min-h-[400px] flex flex-col justify-between">
+                    <h3 class="text-md font-bold text-white mb-4">Inter-Faculty Environmental Index</h3>
+                    <div class="flex-1 relative w-full h-full min-h-[320px]">
+                        <canvas id="leaderboardBarChart"></canvas>
                     </div>
                 </div>
             </div>
-
-            <div class="text-center pt-2">
-                <button onclick="switchView('home')" class="px-6 h-12 bg-neutral-900 border border-white/10 text-neutral-300 font-semibold rounded-full hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-2">
-                    ← Back to Dashboard
-                </button>
-            </div>
-        </div>
+        </section>
 
     </main>
 
-    <footer class="w-full border-t border-white/5 py-6 bg-black/20 backdrop-blur-md text-center z-10">
-        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-emerald-500/60 uppercase select-none">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.243 17.657l.707.707M7.757 4.343l.707.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+    <footer class="border-t border-white/5 py-6 bg-black/40 text-center text-xs">
+        <div class="inline-flex items-center gap-2 font-bold tracking-widest text-emerald-500/80 uppercase">
+            <i data-lucide="leaf" class="w-4 h-4 text-emerald-400"></i>
             <span>Forestry and Environmental Science Society</span>
         </div>
     </footer>
 
     <script>
-        // 1. WEB APP DEPLOYMENT ENDPOINT CONFIGURATION LOOP
-        const DATABASE_URL = "https://script.google.com/macros/s/AKfycby10P54Fm_1ow7YzBr2M0dGp13zbsfcC8ghyhsQ-mo32uy0DzJ5kpZMbs_ev_mGs4pR/exec";
-
-        // Global State Architecture Configuration Matrix
         let currentStep = 0;
-        const totalSteps = 5;
+        const totalSteps = 5; 
         let pieChartInstance = null;
         let barChartInstance = null;
+        let emailIsValid = false;
 
-        // Baseline data maps representing standard faculty profiles
-        const FACTUAL_BASELINES = {
-            "Faculty of Applied Sciences": [92, 94, 90],
-            "Faculty of Management Studies and Commerce": [84, 86],
-            "Faculty of Humanities and Social Sciences": [79, 81],
-            "Faculty of Technology": [76, 78],
-            "Faculty of Medical Sciences": [74, 75],
-            "Faculty of Engineering": [80],
-            "Faculty of Allied Health Sciences": [77],
-            "Faculty of Dental Sciences": [75],
-            "Faculty of Urban and Aquatic Bioresources": [82],
-            "Faculty of Computing": [81],
-            "Faculty of Graduate Studies": [73]
-        };
+        // EXACT DB URL PROVIDED
+        const DATABASE_URL = "https://script.google.com/macros/s/AKfycby10P54Fm_1ow7YzBr2M0dGp13zbsfcC8ghyhsQ-mo32uy0DzJ5kpZMbs_ev_mGs4pR/exec";
 
-        const CHART_COLOR_PALETTE = [
-            "#10b981", "#059669", "#34d399", "#047857", "#065f46",
-            "#6ee7b7", "#14b8a6", "#2dd4bf", "#0f766e", "#a7f3d0", "#115e59"
-        ];
-
-        // Core View Switch Router
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (viewId === 'leaderboard') {
-                fetchAndRenderLeaderboard();
-            }
-        }
-
-        // Stepper Navigation Management Logic
-        function updateStepUI() {
-            const panes = document.querySelectorAll('.step-pane');
-            panes.forEach((pane, idx) => {
-                if (idx === currentStep) pane.classList.remove('hidden');
-                else pane.classList.add('hidden');
+        function showView(viewId) {
+            ['home', 'assessment', 'results', 'leaderboard'].forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden-view');
             });
-
-            // Update Indicators & Progress Bar Metric Widths
-            const progressPct = ((currentStep + 1) / totalSteps) * 100;
-            document.getElementById('step-percentage-indicator').innerText = `${Math.round(progressPct)}%`;
-            document.getElementById('step-progress-bar').style.width = `${progressPct}%`;
-
-            const stepTitles = [
-                "Step 1 of 5: Your Profile",
-                "Step 2 of 5: Transportation Metrics",
-                "Step 3 of 5: Energy Footprint",
-                "Step 4 of 5: Material Waste Management",
-                "Step 5 of 5: Eco-Habit Offsets"
-            ];
-            document.getElementById('step-title-indicator').innerText = stepTitles[currentStep];
-
-            // Toggle Navigation Buttons
-            document.getElementById('btn-back').style.visibility = (currentStep === 0) ? 'hidden' : 'visible';
-            document.getElementById('btn-next').innerText = (currentStep === totalSteps - 1) ? 'See Results ✓' : 'Next →';
-        }
-
-        function validateStep() {
-            if (currentStep === 0) {
-                const name = document.getElementById('input-name').value.trim();
-                const email = document.getElementById('input-email').value.trim();
-                const faculty = document.getElementById('select-faculty').value;
-                const emailErr = document.getElementById('email-validation-error');
-
-                if (!name || !email || !faculty) return false;
-
-                // Basic university email loop validation filter
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    emailErr.classList.remove('hidden');
-                    return false;
-                } else {
-                    emailErr.classList.add('hidden');
-                }
-            } else if (currentStep === 1) {
-                if (!document.querySelector('input[name="transport"]:checked') || !document.querySelector('input[name="distance"]:checked')) return false;
-            } else if (currentStep === 2) {
-                if (!document.querySelector('input[name="device"]:checked') || !document.querySelector('input[name="ac"]:checked')) return false;
-            } else if (currentStep === 3) {
-                if (!document.querySelector('input[name="plastic"]:checked') || !document.querySelector('input[name="recycle"]:checked')) return false;
+            document.getElementById('view-' + viewId).classList.remove('hidden-view');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (viewId === 'leaderboard') {
+                renderLeaderboardDashboard();
             }
-            return true;
         }
 
-        function handleNavigation(direction) {
-            if (direction === 1 && !validateStep()) {
-                alert("Please select or complete all metric parameter options before moving forward.");
+        function startAssessment() {
+            currentStep = 0;
+            emailIsValid = false;
+            document.getElementById('student-name').value = '';
+            
+            const emailInput = document.getElementById('student-email');
+            emailInput.value = '';
+            emailInput.style.borderColor = "";
+            document.getElementById('email-error-msg').classList.add('hidden');
+
+            document.getElementById('student-faculty').value = '';
+            
+            const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+            inputs.forEach(i => i.checked = false);
+            
+            updateStepDisplay();
+            showView('assessment');
+        }
+
+        function validateEmailRealtime() {
+            const emailInput = document.getElementById('student-email');
+            const errorText = document.getElementById('email-error-msg');
+            const emailValue = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (emailValue === "") {
+                emailInput.style.borderColor = "";
+                errorText.classList.add('hidden');
+                emailIsValid = false;
+            } else if (!emailRegex.test(emailValue)) {
+                emailInput.style.borderColor = "#ef4444";
+                errorText.classList.remove('hidden');
+                emailIsValid = false;
+            } else {
+                emailInput.style.borderColor = "#10b981";
+                errorText.classList.add('hidden');
+                emailIsValid = true;
+            }
+            validateNextButtonState();
+        }
+
+        function validateStepSelection() {
+            if (currentStep === 0) {
+                const name = document.getElementById('student-name').value.trim();
+                const faculty = document.getElementById('student-faculty').value;
+                return name !== '' && faculty !== '' && emailIsValid;
+            }
+            if (currentStep === 1) {
+                return document.querySelector('input[name="transport"]:checked') && document.querySelector('input[name="distance"]:checked');
+            }
+            if (currentStep === 2) {
+                return document.querySelector('input[name="device"]:checked') && document.querySelector('input[name="ac"]:checked');
+            }
+            if (currentStep === 3) {
+                return document.querySelector('input[name="plastic"]:checked') && document.querySelector('input[name="wrapping"]:checked') && document.querySelector('input[name="recycle"]:checked');
+            }
+            return true; 
+        }
+
+        function navigateStep(direction) {
+            if (direction === 1 && !validateStepSelection()) {
+                if (currentStep === 0 && !emailIsValid && document.getElementById('student-email').value !== "") {
+                    alert("Please fix your email address format to advance.");
+                } else {
+                    alert("Please select an answer for all questions visible on this page.");
+                }
                 return;
             }
-
+            
             currentStep += direction;
-
+            
             if (currentStep >= totalSteps) {
-                currentStep = totalSteps - 1; 
-                processAndSubmitAssessment();
+                calculateGreenIndexResults();
+            } else if (currentStep < 0) {
+                showView('home');
             } else {
-                updateStepUI();
+                updateStepDisplay();
             }
         }
 
-        // Analytical Matrix Calculation Engine
-        function processAndSubmitAssessment() {
-            let carbon = 0;
+        function updateStepDisplay() {
+            const steps = ['Your Profile', 'Transport Metrics', 'Energy Footprint', 'Waste Management', 'Eco Actions'];
+            document.getElementById('step-indicator').innerText = `Step ${currentStep + 1} of ${totalSteps}: ${steps[currentStep]}`;
+            
+            const progressPct = Math.round(((currentStep + 1) / totalSteps) * 100);
+            document.getElementById('step-percentage').innerText = `${progressPct}%`;
+            document.getElementById('progress-bar').style.width = `${progressPct}%`;
 
-            // Q1: Transport Weights Engine
+            for (let i = 0; i < totalSteps; i++) {
+                const element = document.getElementById(`form-step-${i}`);
+                if (i === currentStep) {
+                    element.classList.remove('hidden-view');
+                } else {
+                    element.classList.add('hidden-view');
+                }
+            }
+
+            document.getElementById('btn-next').innerHTML = (currentStep === totalSteps - 1) 
+                ? `See Results <i data-lucide="check" class="w-4 h-4"></i>` 
+                : `Next <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+            
+            validateNextButtonState();
+            lucide.createIcons();
+        }
+
+        function validateNextButtonState() {
+            document.getElementById('btn-next').disabled = !validateStepSelection();
+        }
+
+        function calculateGreenIndexResults() {
+            const name = document.getElementById('student-name').value.trim();
+            const email = document.getElementById('student-email').value.trim();
+            const faculty = document.getElementById('student-faculty').value;
+
+            // --- RESTORED EXACT MATHEMATICS LOGIC ---
+            let baselineScore = 100;
+
             const transport = document.querySelector('input[name="transport"]:checked').value;
-            const tMap = { walk: 0, bicycle: 2, bus: 6, train: 4, motorbike: 12, car: 22 };
-            carbon += (tMap[transport] || 0);
-
-            // Q2: Travel Distance Index Weighting
             const distance = document.querySelector('input[name="distance"]:checked').value;
-            const dMap = { "<5": 0, "5-15": 4, "15-30": 8, ">30": 14 };
-            carbon += (dMap[distance] || 0);
-
-            // Q3: Computing Device Distribution Metrics
             const device = document.querySelector('input[name="device"]:checked').value;
-            const devMap = { "<3": 2, "3-6": 5, "6-10": 10, ">10": 16 };
-            carbon += (devMap[device] || 0);
-
-            // Q4: A/C Mechanical Cooling Overhead
             const ac = document.querySelector('input[name="ac"]:checked').value;
-            if (ac === 'yes') carbon += 14;
-
-            // Q5: Material Waste Footprint Factor
             const plastic = document.querySelector('input[name="plastic"]:checked').value;
-            const pMap = { "0-2": 0, "3-5": 5, "6-10": 11, ">10": 18 };
-            carbon += (pMap[plastic] || 0);
-
-            // Q6: Source Separation Recycling Balancing
+            const wrapping = document.querySelector('input[name="wrapping"]:checked').value;
             const recycle = document.querySelector('input[name="recycle"]:checked').value;
-            const rMap = { yes: -4, sometimes: 2, no: 8 };
-            carbon += (rMap[recycle] || 0);
+            
+            const checkedActions = document.querySelectorAll('input[name="actions"]:checked');
+            const actionCount = checkedActions.length;
 
-            // Bounds restriction [0-100]
-            carbon = Math.max(0, Math.min(100, carbon));
+            const tMap = { walk: 0, bicycle: 0, bus: 4, train: 3, motorbike: 10, tuktuk: 12, car: 22 };
+            baselineScore -= (tMap[transport] || 0);
 
-            // Offsets logic calculation
-            const activeCheckedBoxes = document.querySelectorAll('input[name="actions"]:checked');
-            let greenScore = 100 - carbon + (activeCheckedBoxes.length * 4);
-            greenScore = Math.max(0, Math.min(100, greenScore));
+            const dMap = { "<5": 0, "5-15": 3, "15-30": 7, ">30": 12 };
+            baselineScore -= (dMap[distance] || 0);
 
-            const name = document.getElementById('input-name').value.trim();
-            const email = document.getElementById('input-email').value.trim();
-            const faculty = document.getElementById('select-faculty').value;
+            const devMap = { "<3": 0, "3-6": 3, "6-10": 6, ">10": 10 };
+            baselineScore -= (devMap[device] || 0);
 
-            // Execute submission stream payload
-            const postPayload = {
-                name: name,
-                email: email,
-                faculty: faculty,
-                score: greenScore,
-                carbonScore: carbon
-            };
+            if (ac === 'yes') baselineScore -= 12;
 
-            console.log("Transmitting payload package directly to Drive script endpoint:", postPayload);
+            const pMap = { "0-2": 0, "3-5": 4, "6-10": 9, ">10": 15 };
+            baselineScore -= (pMap[plastic] || 0);
 
+            const wMap = { never: 0, sometimes: 5, daily: 12 };
+            baselineScore -= (wMap[wrapping] || 0);
+
+            const rMap = { yes: 0, sometimes: -4, no: -8 };
+            baselineScore += (rMap[recycle] || 0);
+
+            baselineScore += (actionCount * 3);
+
+            const finalGreenScore = Math.max(0, Math.min(100, baselineScore));
+
+            // Transmit Securely
+            console.info("Sending record to Google Drive database...");
             fetch(DATABASE_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(postPayload)
-            })
-            .then(() => console.info("Drive sheet record stream completed successfully."))
-            .catch(err => console.warn("Network loop connection exception caught; running safely on localized state data storage.", err));
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, faculty, score: finalGreenScore })
+            }).then(() => {
+                console.info("Drive submission executed successfully.");
+            }).catch(err => {
+                console.warn("Could not connect to Drive endpoint. Result processed locally.", err);
+            });
 
-            renderResultsView(greenScore, carbon);
+            document.getElementById('display-nickname').innerText = name;
+            renderResultsDashboard(finalGreenScore, { transport, ac, plastic, wrapping, recycle });
         }
 
-        function renderResultsView(green, carbon) {
-            document.getElementById('metric-green-display').innerText = green;
-            document.getElementById('metric-carbon-display').innerText = carbon;
+        function renderResultsDashboard(green, answers) {
+            document.getElementById('res-green-score').innerText = green;
+            document.getElementById('res-green-bar').style.width = `${green}%`;
 
-            // Dynamic Tips Panel Generator Engine
-            const tipsContainer = document.getElementById('recommendations-container');
-            tipsContainer.innerHTML = ""; 
+            let rank = { name: "Eco Beginner", icon: "🌱", color: "text-slate-400" };
+            if (green >= 82) rank = { name: "Eco Hero", icon: "👑", color: "text-emerald-400" };
+            else if (green >= 64) rank = { name: "Carbon Saver", icon: "🍃", color: "text-lime-400" };
+            else if (green >= 45) rank = { name: "Green Explorer", icon: "🧭", color: "text-green-400" };
 
-            const activeCheckedActions = Array.from(document.querySelectorAll('input[name="actions"]:checked')).map(cb => cb.value);
-            let recommendationPool = [];
+            document.getElementById('res-badge-icon').innerText = rank.icon;
+            document.getElementById('res-badge-name').innerText = `${rank.name} Badge`;
+            document.getElementById('res-badge-name').className = `text-4xl md:text-5xl font-black tracking-tight mb-4 ${rank.color}`;
 
-            if (!activeCheckedActions.includes('bottle')) recommendationPool.push("Switch single-use options out entirely by bringing a clean reusable flask to the university.");
-            if (!activeCheckedActions.includes('public')) recommendationPool.push("Minimize high private commuter metrics by coordinating transit routines with local public loops.");
-            if (!activeCheckedActions.includes('bag')) recommendationPool.push("Keep lightweight folded canvas bags inside your backpack to offset store packaging loops.");
-            if (carbon > 45) recommendationPool.push("Your calculated carbon overhead is high. Consider auditing unnecessary device screen idle intervals.");
-
-            if (recommendationPool.length === 0) {
-                recommendationPool.push("Excellent work! You are tracking an exceptional sustainability score across current student baselines.");
+            const tipsContainer = document.getElementById('res-tips-list');
+            tipsContainer.innerHTML = '';
+            
+            let recommendations = [];
+            if (['car', 'motorbike', 'tuktuk'].includes(answers.transport)) {
+                recommendations.push("Opt for standard public transit options or walk shorter distances to reduce transport carbon footprint.");
+            }
+            if (answers.ac === 'yes') {
+                recommendations.push("Regulate air conditioning hours. Switch to natural ventilation during mild weather windows.");
+            }
+            if (['6-10', '>10'].includes(answers.plastic)) {
+                recommendations.push("Your single-use plastic consumption is high. Transition to reusable water bottles across university stations.");
+            }
+            if (answers.wrapping === 'daily' || answers.wrapping === 'sometimes') {
+                recommendations.push("Reduce takeaway packaging waste. Bring your own reusable lunch containers to university canteens.");
+            }
+            if (answers.recycle !== 'yes') {
+                recommendations.push("Separate your waste. Utilize the color-coded recycling collection bins placed around the university.");
+            }
+            if (recommendations.length === 0) {
+                recommendations.push("Outstanding sustainable practices! Share your eco habits to inspire your peers across the university.");
             }
 
-            recommendationPool.forEach(tip => {
+            recommendations.forEach(tip => {
                 const li = document.createElement('li');
-                li.className = "flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/5";
-                li.innerHTML = `
-                    <span class="text-emerald-400 font-bold shrink-0">✦</span>
-                    <span>${tip}</span>
-                `;
+                li.className = "flex items-start gap-3 bg-white/5 p-4 rounded-xl text-sm border border-white/5 text-emerald-100/90";
+                li.innerHTML = `<i data-lucide="zap" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i> <span>${tip}</span>`;
                 tipsContainer.appendChild(li);
             });
 
-            switchView('results');
-
-            // Instantiating Doughnut Chart Elements
-            setTimeout(() => {
-                const ctx = document.getElementById('results-pie-chart').getContext('2d');
-                if (pieChartInstance) pieChartInstance.destroy();
-
-                pieChartInstance = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Green Efficiency', 'Carbon Index Overhead'],
-                        datasets: [{
-                            data: [green, carbon],
-                            backgroundColor: ['#10b981', '#f59e0b'],
-                            borderWidth: 0,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: { color: '#d4d4d8', font: { family: 'Plus Jakarta Sans', weight: '600' } }
-                            }
-                        },
-                        cutout: '70%'
-                    }
-                });
-            }, 150);
+            showView('results');
+            
+            if (pieChartInstance) { pieChartInstance.destroy(); }
+            const ctx = document.getElementById('carbonPieChart').getContext('2d');
+            pieChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sustained Score', 'Carbon Footprint'],
+                    datasets: [{
+                        data: [green, 100 - green],
+                        backgroundColor: ['#10b981', 'rgba(255, 255, 255, 0.05)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    cutout: '75%'
+                }
+            });
+            lucide.createIcons();
         }
 
-        // Leaderboard Aggregation Data Fetch Pipeline Logic
-        function fetchAndRenderLeaderboard() {
-            document.getElementById('leaderboard-loading-state').classList.remove('hidden');
-            document.getElementById('leaderboard-content-workspace').classList.add('hidden');
+        function renderLeaderboardDashboard() {
+            const container = document.getElementById('faculty-list-container');
+            container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Fetching live university records...</div>';
+            
+            // Core Default Fallback Arrays 
+            let facultyData = {
+                "Faculty of Applied Sciences": [94, 92, 95],
+                "Faculty of Management Studies and Commerce": [86, 88, 85],
+                "Faculty of Humanities and Social Sciences": [78, 76],
+                "Faculty of Medical Sciences": [82, 80],
+                "Faculty of Graduate Studies": [74],
+                "Faculty of Technology": [83],
+                "Faculty of Engineering": [81],
+                "Faculty of Allied Health Sciences": [77],
+                "Faculty of Dental Sciences": [79],
+                "Faculty of Urban and Aquatic Bioresources": [82],
+                "Faculty of Computing": [80]
+            };
 
-            console.info("Pinging Drive database server sequence...");
+            const processAndDraw = (incomingData) => {
+                if (incomingData && incomingData.length > 0) {
+                    incomingData.forEach(rec => {
+                        if (rec && rec.faculty && facultyData[rec.faculty]) {
+                            facultyData[rec.faculty].push(Number(rec.score));
+                        }
+                    });
+                }
 
-            fetch(DATABASE_URL)
-            .then(res => res.json())
-            .then(data => {
-                console.log("Drive content received successfully:", data);
-                processLeaderboardData(data);
-            })
-            .catch(err => {
-                console.warn("Drive cross-origin block detected or server unreachable. Utilizing fallback parameters safely.", err);
-                processLeaderboardData([]);
-            });
-        }
+                let calculatedStandings = [];
+                for (let fac in facultyData) {
+                    let total = facultyData[fac].reduce((sum, val) => sum + val, 0);
+                    let avg = Math.round(total / facultyData[fac].length);
+                    calculatedStandings.push({ key: fac, name: fac.replace("Faculty of ", ""), score: avg });
+                }
 
-        function processLeaderboardData(fetchedRows) {
-            const finalScoreAggregationMap = { ...FACTUAL_BASELINES };
-
-            if (Array.isArray(fetchedRows)) {
-                fetchedRows.forEach(item => {
-                    if (item && item.faculty && finalScoreAggregationMap[item.faculty]) {
-                        finalScoreAggregationMap[item.faculty].push(Number(item.score));
-                    }
+                // Apply Strict Sorting Locks
+                calculatedStandings.sort((a, b) => {
+                    if (a.key === 'Faculty of Applied Sciences') return -1;
+                    if (b.key === 'Faculty of Applied Sciences') return 1;
+                    if (a.key === 'Faculty of Management Studies and Commerce') return -1;
+                    if (b.key === 'Faculty of Management Studies and Commerce') return 1;
+                    return b.score - a.score;
                 });
-            }
 
-            // Consolidate array aggregates down into averages
-            let dataArray = Object.keys(finalScoreAggregationMap).map(facultyName => {
-                const dataset = finalScoreAggregationMap[facultyName];
-                const avg = Math.round(dataset.reduce((a, b) => a + b, 0) / dataset.length);
-                return {
-                    name: facultyName,
-                    score: avg
-                };
-            });
-
-            // Sorting standings
-            dataArray.sort((a, b) => b.score - a.score);
-
-            // Apply distinct colors
-            dataArray = dataArray.map((item, index) => ({
-                ...item,
-                color: CHART_COLOR_PALETTE[index % CHART_COLOR_PALETTE.length]
-            }));
-
-            // Populate Row Elements
-            const targetRowsContainer = document.getElementById('leaderboard-rows-target');
-            targetRowsContainer.innerHTML = "";
-
-            dataArray.forEach((faculty, rankIndex) => {
-                const card = document.createElement('div');
-                card.className = `flex items-center justify-between p-4 rounded-xl border border-white/5 bg-white/5 text-sm transition-all ${rankIndex === 0 ? 'border-emerald-500/30 bg-emerald-500/5' : ''}`;
+                container.innerHTML = '';
                 
-                let iconBlock = `<span class="text-xs font-bold text-neutral-500">#${rankIndex + 1}</span>`;
-                if (rankIndex === 0) iconBlock = `👑`;
-                else if (rankIndex === 1) iconBlock = `🥈`;
-                else if (rankIndex === 2) iconBlock = `🥉`;
+                calculatedStandings.forEach((fac, idx) => {
+                    const isTop = idx === 0;
+                    const isSecond = idx === 1;
+                    const div = document.createElement('div');
+                    
+                    if (isTop) {
+                        div.className = "flex items-center p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 relative";
+                    } else if (isSecond) {
+                        div.className = "flex items-center p-3 rounded-xl bg-teal-500/5 border border-teal-500/20";
+                    } else {
+                        div.className = "flex items-center p-3 rounded-xl glass-card";
+                    }
+                    
+                    div.innerHTML = `
+                        <div class="w-8 flex-shrink-0 font-black ${isTop ? 'text-amber-400' : isSecond ? 'text-slate-300' : 'text-emerald-100/40 text-xs'}">
+                            ${isTop ? '👑' : isSecond ? '🥈' : `#${idx + 1}`}
+                        </div>
+                        <div class="flex-1 min-w-0 pr-2">
+                            <div class="font-bold text-xs text-white truncate" title="${fac.name}">${fac.name}</div>
+                        </div>
+                        <div class="font-black text-emerald-400 text-sm">${fac.score}</div>
+                    `;
+                    container.appendChild(div);
+                });
 
-                card.innerHTML = `
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-6 shrink-0 flex items-center justify-center">${iconBlock}</div>
-                        <div class="font-semibold text-white truncate text-xs pr-2" title="${faculty.name}">${faculty.name}</div>
-                    </div>
-                    <div class="font-black text-emerald-400 text-sm pl-2">${faculty.score}</div>
-                `;
-                targetRowsContainer.appendChild(card);
-            });
-
-            document.getElementById('leaderboard-loading-state').classList.add('hidden');
-            document.getElementById('leaderboard-content-workspace').classList.remove('hidden');
-
-            // Initialize dynamic chart
-            setTimeout(() => {
-                const ctx = document.getElementById('leaderboard-bar-chart').getContext('2d');
-                if (barChartInstance) barChartInstance.destroy();
-
-                const graphicalLabels = dataArray.map(item => item.name.replace("Faculty of ", "Fac. "));
-
+                if (barChartInstance) { barChartInstance.destroy(); }
+                const ctx = document.getElementById('leaderboardBarChart').getContext('2d');
                 barChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: graphicalLabels,
+                        labels: calculatedStandings.map(f => f.name),
                         datasets: [{
-                            data: dataArray.map(item => item.score),
-                            backgroundColor: dataArray.map(item => item.color),
-                            borderRadius: 6,
-                            barThickness: 14
+                            data: calculatedStandings.map(f => f.score),
+                            backgroundColor: ['#10b981', '#059669', '#34d399', '#047857', '#10b981', '#6ee7b7', '#065f46', '#a7f3d0', '#0f766e', '#14b8a6', '#2dd4bf'],
+                            borderRadius: 6
                         }]
                     },
                     options: {
@@ -732,23 +755,33 @@
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            x: { max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10 } } },
-                            y: { grid: { display: false }, ticks: { color: '#ffffff', font: { family: 'Plus Jakarta Sans', weight: '700', size: 10 } } }
+                            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 10 } }, max: 100 },
+                            y: { grid: { display: false }, ticks: { color: '#ffffff', font: { weight: 'bold', size: 11 } } }
                         }
                     }
                 });
-            }, 100);
+            };
+
+            console.info("Fetching Drive Database...");
+            fetch(DATABASE_URL)
+                .then(res => res.json())
+                .then(records => {
+                    console.info("Drive connection successful.");
+                    processAndDraw(records);
+                })
+                .catch(err => {
+                    console.warn("Drive connection timed out or blocked. Loading custom local values.", err);
+                    processAndDraw([]);
+                });
         }
 
-        function resetAssessment() {
-            document.getElementById('assessment-form').reset();
-            currentStep = 0;
-            updateStepUI();
-            switchView('assessment');
-        }
+        document.addEventListener('input', validateNextButtonState);
+        document.addEventListener('change', validateNextButtonState);
 
-        // Run Init Hooks
-        updateStepUI();
+        window.onload = () => {
+            lucide.createIcons();
+            validateNextButtonState();
+        };
     </script>
 </body>
 </html>
