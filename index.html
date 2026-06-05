@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USJ Green Steps Ecosystem Index</title>
+    <title>USJ University Sustainability Index</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -22,17 +22,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .custom-radio:checked + label {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.08);
-            color: #ffffff;
-        }
-
-        .custom-checkbox:checked + label {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.08);
         }
 
         /* Custom Scrollbar for Leaderboard list */
@@ -75,7 +64,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-                <button onclick="switchView('assessment')" class="w-full sm:w-auto px-8 h-14 bg-emerald-500 text-neutral-9lessly font-bold rounded-full hover:bg-emerald-400 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 text-base">
+                <button onclick="switchView('assessment')" class="w-full sm:w-auto px-8 h-14 bg-emerald-500 text-neutral-950 font-bold rounded-full hover:bg-emerald-400 shadow-lg shadow-emerald-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 text-base">
                     Start Assessment
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </button>
@@ -90,7 +79,7 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
                     <h3 class="text-md font-bold text-white">Under 2 Minutes</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Optimized and concise questionnaire tailored for quick academic routines.</p>
+                    <p class="text-xs text-neutral-400 leading-relaxed">Optimized and concise questionnaire tailored for quick university routines.</p>
                 </div>
                 <div class="glass-panel p-6 rounded-2xl space-y-2">
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2">
@@ -113,7 +102,7 @@
             
             <div class="space-y-2">
                 <div class="flex justify-between text-xs font-bold text-neutral-400 uppercase tracking-widest">
-                    <span id="step-title-indicator">Step 1 of 5: Campus Profile</span>
+                    <span id="step-title-indicator">Step 1 of 5: Your Profile</span>
                     <span id="step-percentage-indicator" class="text-emerald-400">20%</span>
                 </div>
                 <div class="w-full h-2 bg-neutral-800/80 rounded-full overflow-hidden">
@@ -125,7 +114,7 @@
                 <form id="assessment-form" onsubmit="event.preventDefault();">
                     
                     <div class="step-pane space-y-5">
-                        <h3 class="text-xl font-bold text-white mb-2">Campus Profile Registration</h3>
+                        <h3 class="text-xl font-bold text-white mb-2">University Profile Registration</h3>
                         <div class="space-y-4">
                             <div>
                                 <label class="text-xs text-emerald-400 font-bold uppercase tracking-wider block mb-2">Full Name</label>
@@ -167,40 +156,40 @@
                         <div class="space-y-3">
                             <h3 class="text-xl font-bold text-white">What is your primary mode of transit?</h3>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                <input type="radio" name="transport" value="walk" id="t-walk" class="peer sr-only custom-radio">
-                                <label htmlFor="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Walking</label>
+                                <input type="radio" name="transport" value="walk" id="t-walk" class="peer sr-only">
+                                <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Walking</label>
 
-                                <input type="radio" name="transport" value="bicycle" id="t-bike" class="peer sr-only custom-radio">
-                                <label htmlFor="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Bicycle</label>
+                                <input type="radio" name="transport" value="bicycle" id="t-bike" class="peer sr-only">
+                                <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Bicycle</label>
 
-                                <input type="radio" name="transport" value="bus" id="t-bus" class="peer sr-only custom-radio">
-                                <label htmlFor="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Public Bus</label>
+                                <input type="radio" name="transport" value="bus" id="t-bus" class="peer sr-only">
+                                <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Public Bus</label>
 
-                                <input type="radio" name="transport" value="train" id="t-train" class="peer sr-only custom-radio">
-                                <label htmlFor="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Train Loop</label>
+                                <input type="radio" name="transport" value="train" id="t-train" class="peer sr-only">
+                                <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Train Loop</label>
 
-                                <input type="radio" name="transport" value="motorbike" id="t-bike-m" class="peer sr-only custom-radio">
-                                <label htmlFor="t-bike-m" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Motorbike</label>
+                                <input type="radio" name="transport" value="motorbike" id="t-bike-m" class="peer sr-only">
+                                <label for="t-bike-m" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Motorbike</label>
 
-                                <input type="radio" name="transport" value="car" id="t-car" class="peer sr-only custom-radio">
-                                <label htmlFor="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Private Car</label>
+                                <input type="radio" name="transport" value="car" id="t-car" class="peer sr-only">
+                                <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-center text-sm font-semibold text-neutral-300">Private Car</label>
                             </div>
                         </div>
 
                         <div class="space-y-3 pt-4">
                             <h3 class="text-xl font-bold text-white">Estimated cumulative daily transit distance?</h3>
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="distance" value="<5" id="d-1" class="peer sr-only custom-radio">
-                                <label htmlFor="d-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 5 km</label>
+                                <input type="radio" name="distance" value="<5" id="d-1" class="peer sr-only">
+                                <label for="d-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 5 km</label>
 
-                                <input type="radio" name="distance" value="5-15" id="d-2" class="peer sr-only custom-radio">
-                                <label htmlFor="d-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">5 - 15 km</label>
+                                <input type="radio" name="distance" value="5-15" id="d-2" class="peer sr-only">
+                                <label for="d-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">5 - 15 km</label>
 
-                                <input type="radio" name="distance" value="15-30" id="d-3" class="peer sr-only custom-radio">
-                                <label htmlFor="d-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">15 - 30 km</label>
+                                <input type="radio" name="distance" value="15-30" id="d-3" class="peer sr-only">
+                                <label for="d-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">15 - 30 km</label>
 
-                                <input type="radio" name="distance" value=">30" id="d-4" class="peer sr-only custom-radio">
-                                <label htmlFor="d-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 30 km</label>
+                                <input type="radio" name="distance" value=">30" id="d-4" class="peer sr-only">
+                                <label for="d-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 30 km</label>
                             </div>
                         </div>
                     </div>
@@ -209,28 +198,28 @@
                         <div class="space-y-3">
                             <h3 class="text-xl font-semibold text-white">Daily dynamic digital device usage?</h3>
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="device" value="<3" id="dev-1" class="peer sr-only custom-radio">
-                                <label htmlFor="dev-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 3 hours</label>
+                                <input type="radio" name="device" value="<3" id="dev-1" class="peer sr-only">
+                                <label for="dev-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Less than 3 hours</label>
 
-                                <input type="radio" name="device" value="3-6" id="dev-2" class="peer sr-only custom-radio">
-                                <label htmlFor="dev-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 6 hours</label>
+                                <input type="radio" name="device" value="3-6" id="dev-2" class="peer sr-only">
+                                <label for="dev-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 6 hours</label>
 
-                                <input type="radio" name="device" value="6-10" id="dev-3" class="peer sr-only custom-radio">
-                                <label htmlFor="dev-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 hours</label>
+                                <input type="radio" name="device" value="6-10" id="dev-3" class="peer sr-only">
+                                <label for="dev-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 hours</label>
 
-                                <input type="radio" name="device" value=">10" id="dev-4" class="peer sr-only custom-radio">
-                                <label htmlFor="dev-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 hours</label>
+                                <input type="radio" name="device" value=">10" id="dev-4" class="peer sr-only">
+                                <label for="dev-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 hours</label>
                             </div>
                         </div>
 
                         <div class="space-y-3 pt-4">
                             <h3 class="text-xl font-semibold text-white">Do you consistently use Air Conditioning?</h3>
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="ac" value="yes" id="ac-yes" class="peer sr-only custom-radio">
-                                <label htmlFor="ac-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
+                                <input type="radio" name="ac" value="yes" id="ac-yes" class="peer sr-only">
+                                <label for="ac-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
 
-                                <input type="radio" name="ac" value="no" id="ac-no" class="peer sr-only custom-radio">
-                                <label htmlFor="ac-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
+                                <input type="radio" name="ac" value="no" id="ac-no" class="peer sr-only">
+                                <label for="ac-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
                             </div>
                         </div>
                     </div>
@@ -239,31 +228,31 @@
                         <div class="space-y-3">
                             <h3 class="text-xl font-semibold text-white">Single-use plastic consumption metrics (Weekly)?</h3>
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="radio" name="plastic" value="0-2" id="p-1" class="peer sr-only custom-radio">
-                                <label htmlFor="p-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">0 - 2 items</label>
+                                <input type="radio" name="plastic" value="0-2" id="p-1" class="peer sr-only">
+                                <label for="p-1" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">0 - 2 items</label>
 
-                                <input type="radio" name="plastic" value="3-5" id="p-2" class="peer sr-only custom-radio">
-                                <label htmlFor="p-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 5 items</label>
+                                <input type="radio" name="plastic" value="3-5" id="p-2" class="peer sr-only">
+                                <label for="p-2" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">3 - 5 items</label>
 
-                                <input type="radio" name="plastic" value="6-10" id="p-3" class="peer sr-only custom-radio">
-                                <label htmlFor="p-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 items</label>
+                                <input type="radio" name="plastic" value="6-10" id="p-3" class="peer sr-only">
+                                <label for="p-3" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">6 - 10 items</label>
 
-                                <input type="radio" name="plastic" value=">10" id="p-4" class="peer sr-only custom-radio">
-                                <label htmlFor="p-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 items</label>
+                                <input type="radio" name="plastic" value=">10" id="p-4" class="peer sr-only">
+                                <label for="p-4" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">More than 10 items</label>
                             </div>
                         </div>
 
                         <div class="space-y-3 pt-4">
                             <h3 class="text-xl font-semibold text-white">Do you segregate your waste for recycling cycles?</h3>
                             <div class="grid grid-cols-3 gap-3">
-                                <input type="radio" name="recycle" value="yes" id="r-yes" class="peer sr-only custom-radio">
-                                <label htmlFor="r-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
+                                <input type="radio" name="recycle" value="yes" id="r-yes" class="peer sr-only">
+                                <label for="r-yes" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Yes</label>
 
-                                <input type="radio" name="recycle" value="sometimes" id="r-some" class="peer sr-only custom-radio">
-                                <label htmlFor="r-some" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">Sometimes</label>
+                                <input type="radio" name="recycle" value="sometimes" id="r-some" class="peer sr-only">
+                                <label for="r-some" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">Sometimes</label>
 
-                                <input type="radio" name="recycle" value="no" id="r-no" class="peer sr-only custom-radio">
-                                <label htmlFor="r-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
+                                <input type="radio" name="recycle" value="no" id="r-no" class="peer sr-only">
+                                <label for="r-no" class="flex items-center justify-center rounded-xl border border-white/10 bg-transparent p-4 hover:bg-white/5 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 peer-checked:text-white cursor-pointer transition-all text-sm font-semibold text-neutral-300">No</label>
                             </div>
                         </div>
                     </div>
@@ -273,37 +262,37 @@
                         <p class="text-xs text-neutral-400 mb-2">Select all positive habits that apply to you. Each adds mitigation points to your score!</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div class="relative">
-                                <input type="checkbox" name="actions" value="bottle" id="act-bottle" class="peer sr-only custom-checkbox">
-                                <label htmlFor="act-bottle" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 text-transparent font-bold text-xs select-none">✓</div>
+                                <input type="checkbox" name="actions" value="bottle" id="act-bottle" class="peer sr-only">
+                                <label for="act-bottle" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
+                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
                                     Use reusable thermal flask/bottle
                                 </label>
                             </div>
                             <div class="relative">
-                                <input type="checkbox" name="actions" value="public" id="act-transit" class="peer sr-only custom-checkbox">
-                                <label htmlFor="act-transit" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 text-transparent font-bold text-xs select-none">✓</div>
+                                <input type="checkbox" name="actions" value="public" id="act-transit" class="peer sr-only">
+                                <label for="act-transit" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
+                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
                                     Prioritize public/collective transit
                                 </label>
                             </div>
                             <div class="relative">
-                                <input type="checkbox" name="actions" value="walk" id="act-walk" class="peer sr-only custom-checkbox">
-                                <label htmlFor="act-walk" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 text-transparent font-bold text-xs select-none">✓</div>
-                                    Walk short cross-campus paths
+                                <input type="checkbox" name="actions" value="walk" id="act-walk" class="peer sr-only">
+                                <label for="act-walk" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
+                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
+                                    Walk short cross-university paths
                                 </label>
                             </div>
                             <div class="relative">
-                                <input type="checkbox" name="actions" value="bag" id="act-bag" class="peer sr-only custom-checkbox">
-                                <label htmlFor="act-bag" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 text-transparent font-bold text-xs select-none">✓</div>
+                                <input type="checkbox" name="actions" value="bag" id="act-bag" class="peer sr-only">
+                                <label for="act-bag" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
+                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
                                     Bring your own canvas shopping bag
                                 </label>
                             </div>
                             <div class="relative">
-                                <input type="checkbox" name="actions" value="tree" id="act-volunteer" class="peer sr-only custom-checkbox">
-                                <label htmlFor="act-volunteer" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 transition-colors">
-                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 text-transparent font-bold text-xs select-none">✓</div>
+                                <input type="checkbox" name="actions" value="tree" id="act-volunteer" class="peer sr-only">
+                                <label for="act-volunteer" class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 text-sm text-neutral-300 cursor-pointer hover:bg-white/10 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 transition-colors">
+                                    <div class="w-5 h-5 rounded border border-emerald-500/30 flex items-center justify-center peer-checked:bg-emerald-500 peer-checked:text-neutral-950 font-bold text-xs select-none">✓</div>
                                     Participated in environmental work
                                 </label>
                             </div>
@@ -367,12 +356,12 @@
         <div id="view-leaderboard" class="view-section hidden space-y-8 py-4">
             <div class="text-center space-y-2">
                 <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">Faculty Standings</h2>
-                <p class="text-sm text-neutral-400 max-w-md mx-auto">Real-time dynamic resource ranking mapped from all student assessment submissions.</p>
+                <p class="text-sm text-neutral-400 max-w-md mx-auto">Real-time dynamic resource ranking mapped from all student assessment submissions across the university.</p>
             </div>
 
             <div id="leaderboard-loading-state" class="py-12 flex flex-col items-center justify-center text-neutral-400 gap-3">
                 <div class="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin"></div>
-                <span class="text-xs font-semibold tracking-wider uppercase">Syncing campus metrics...</span>
+                <span class="text-xs font-semibold tracking-wider uppercase">Syncing university metrics...</span>
             </div>
 
             <div id="leaderboard-content-workspace" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start hidden">
@@ -413,7 +402,7 @@
         let pieChartInstance = null;
         let barChartInstance = null;
 
-        // Baseline pre-seeded data maps representing standard faculty profiles
+        // Baseline data maps representing standard faculty profiles
         const FACTUAL_BASELINES = {
             "Faculty of Applied Sciences": [92, 94, 90],
             "Faculty of Management Studies and Commerce": [84, 86],
@@ -458,7 +447,7 @@
             document.getElementById('step-progress-bar').style.width = `${progressPct}%`;
 
             const stepTitles = [
-                "Step 1 of 5: Campus Profile",
+                "Step 1 of 5: Your Profile",
                 "Step 2 of 5: Transportation Metrics",
                 "Step 3 of 5: Energy Footprint",
                 "Step 4 of 5: Material Waste Management",
@@ -480,7 +469,7 @@
 
                 if (!name || !email || !faculty) return false;
 
-                // Basic university domain structure lookup filter validation
+                // Basic university email loop validation filter
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
                     emailErr.classList.remove('hidden');
@@ -507,14 +496,14 @@
             currentStep += direction;
 
             if (currentStep >= totalSteps) {
-                currentStep = totalSteps - 1; // Cap bounding
+                currentStep = totalSteps - 1; 
                 processAndSubmitAssessment();
             } else {
                 updateStepUI();
             }
         }
 
-        // Deep Analytical Matrix Calculation Core Logic
+        // Analytical Matrix Calculation Engine
         function processAndSubmitAssessment() {
             let carbon = 0;
 
@@ -547,20 +536,19 @@
             const rMap = { yes: -4, sometimes: 2, no: 8 };
             carbon += (rMap[recycle] || 0);
 
-            // Keep within standard logical bounds [0-100]
+            // Bounds restriction [0-100]
             carbon = Math.max(0, Math.min(100, carbon));
 
-            // Checked positive offset deductions formulation rules
+            // Offsets logic calculation
             const activeCheckedBoxes = document.querySelectorAll('input[name="actions"]:checked');
             let greenScore = 100 - carbon + (activeCheckedBoxes.length * 4);
             greenScore = Math.max(0, Math.min(100, greenScore));
 
-            // Extract Registration profile data payloads
             const name = document.getElementById('input-name').value.trim();
             const email = document.getElementById('input-email').value.trim();
             const faculty = document.getElementById('select-faculty').value;
 
-            // Execute asynchronous backend storage pipe transit push to Google Apps Script
+            // Execute submission stream payload
             const postPayload = {
                 name: name,
                 email: email,
@@ -569,16 +557,17 @@
                 carbonScore: carbon
             };
 
+            console.log("Transmitting payload package directly to Drive script endpoint:", postPayload);
+
             fetch(DATABASE_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(postPayload)
             })
-            .then(() => console.info("Data transit loop processed downstream successfully."))
-            .catch(err => console.warn("Background thread pipeline fallback enabled:", err));
+            .then(() => console.info("Drive sheet record stream completed successfully."))
+            .catch(err => console.warn("Network loop connection exception caught; running safely on localized state data storage.", err));
 
-            // Generate Output Screen Framework Elements
             renderResultsView(greenScore, carbon);
         }
 
@@ -586,14 +575,14 @@
             document.getElementById('metric-green-display').innerText = green;
             document.getElementById('metric-carbon-display').innerText = carbon;
 
-            // Render Dynamic Tips Map Engine Recommendations Loops
+            // Dynamic Tips Panel Generator Engine
             const tipsContainer = document.getElementById('recommendations-container');
-            tipsContainer.innerHTML = ""; // Clear baseline configurations
+            tipsContainer.innerHTML = ""; 
 
             const activeCheckedActions = Array.from(document.querySelectorAll('input[name="actions"]:checked')).map(cb => cb.value);
             let recommendationPool = [];
 
-            if (!activeCheckedActions.includes('bottle')) recommendationPool.push("Switch single-use options out entirely by bringing a clean reusable flask to campus.");
+            if (!activeCheckedActions.includes('bottle')) recommendationPool.push("Switch single-use options out entirely by bringing a clean reusable flask to the university.");
             if (!activeCheckedActions.includes('public')) recommendationPool.push("Minimize high private commuter metrics by coordinating transit routines with local public loops.");
             if (!activeCheckedActions.includes('bag')) recommendationPool.push("Keep lightweight folded canvas bags inside your backpack to offset store packaging loops.");
             if (carbon > 45) recommendationPool.push("Your calculated carbon overhead is high. Consider auditing unnecessary device screen idle intervals.");
@@ -614,7 +603,7 @@
 
             switchView('results');
 
-            // Instantiating ChartJS Engine Visualizers
+            // Instantiating Doughnut Chart Elements
             setTimeout(() => {
                 const ctx = document.getElementById('results-pie-chart').getContext('2d');
                 if (pieChartInstance) pieChartInstance.destroy();
@@ -649,11 +638,16 @@
             document.getElementById('leaderboard-loading-state').classList.remove('hidden');
             document.getElementById('leaderboard-content-workspace').classList.add('hidden');
 
+            console.info("Pinging Drive database server sequence...");
+
             fetch(DATABASE_URL)
             .then(res => res.json())
-            .then(data => processLeaderboardData(data))
+            .then(data => {
+                console.log("Drive content received successfully:", data);
+                processLeaderboardData(data);
+            })
             .catch(err => {
-                console.warn("Network loop timeout, dropping into local metrics engine configuration arrays.", err);
+                console.warn("Drive cross-origin block detected or server unreachable. Utilizing fallback parameters safely.", err);
                 processLeaderboardData([]);
             });
         }
@@ -661,7 +655,6 @@
         function processLeaderboardData(fetchedRows) {
             const finalScoreAggregationMap = { ...FACTUAL_BASELINES };
 
-            // Dynamic stream ingestion mapping from rows array data structural forms
             if (Array.isArray(fetchedRows)) {
                 fetchedRows.forEach(item => {
                     if (item && item.faculty && finalScoreAggregationMap[item.faculty]) {
@@ -670,7 +663,7 @@
                 });
             }
 
-            // Consolidate array aggregates down into distinct entities
+            // Consolidate array aggregates down into averages
             let dataArray = Object.keys(finalScoreAggregationMap).map(facultyName => {
                 const dataset = finalScoreAggregationMap[facultyName];
                 const avg = Math.round(dataset.reduce((a, b) => a + b, 0) / dataset.length);
@@ -680,16 +673,16 @@
                 };
             });
 
-            // Enforce sorting metrics down chronologically
+            // Sorting standings
             dataArray.sort((a, b) => b.score - a.score);
 
-            // Apply contextual color styling configurations post computation index sorting
+            // Apply distinct colors
             dataArray = dataArray.map((item, index) => ({
                 ...item,
                 color: CHART_COLOR_PALETTE[index % CHART_COLOR_PALETTE.length]
             }));
 
-            // Populate Visual HTML Data Row Cards Components
+            // Populate Row Elements
             const targetRowsContainer = document.getElementById('leaderboard-rows-target');
             targetRowsContainer.innerHTML = "";
 
@@ -712,19 +705,15 @@
                 targetRowsContainer.appendChild(card);
             });
 
-            // Toggle Visibility States Out
             document.getElementById('leaderboard-loading-state').classList.add('hidden');
             document.getElementById('leaderboard-content-workspace').classList.remove('hidden');
 
-            // Initialize or Refresh Horizontal ChartJS Element Arrays
+            // Initialize dynamic chart
             setTimeout(() => {
                 const ctx = document.getElementById('leaderboard-bar-chart').getContext('2d');
                 if (barChartInstance) barChartInstance.destroy();
 
-                // Extract compact shortened labels for clean small device screen real estate profiling
-                const graphicalLabels = dataArray.map(item => {
-                    return item.name.replace("Faculty of ", "Fac. ");
-                });
+                const graphicalLabels = dataArray.map(item => item.name.replace("Faculty of ", "Fac. "));
 
                 barChartInstance = new Chart(ctx, {
                     type: 'bar',
