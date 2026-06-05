@@ -32,6 +32,7 @@
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
+            transition: all 0.3s ease;
         }
         
         .glass-input:focus {
@@ -40,16 +41,13 @@
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
         }
 
-        /* BULLETPROOF BUTTON CSS FIX */
-        input[type="radio"]:checked + label {
+        /* Fixed Radio and Checkbox Button Styling */
+        input[type="radio"]:checked + label,
+        input[type="checkbox"]:checked + label {
             border-color: #10b981 !important;
             background-color: rgba(16, 185, 129, 0.15) !important;
             color: #ffffff !important;
-        }
-
-        input[type="checkbox"]:checked + label {
-            border-color: #10b981 !important;
-            background-color: rgba(16, 185, 129, 0.1) !important;
+            box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.1);
         }
 
         input[type="checkbox"]:checked + label .check-box {
@@ -59,6 +57,12 @@
         }
 
         .hidden-view { display: none !important; }
+
+        /* Social Share Hover Effects */
+        .btn-wa:hover { background-color: #25D366; color: white; border-color: #25D366; }
+        .btn-fb:hover { background-color: #1877F2; color: white; border-color: #1877F2; }
+        .btn-li:hover { background-color: #0A66C2; color: white; border-color: #0A66C2; }
+        .btn-ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border-color: transparent; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -153,55 +157,22 @@
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-white">What is your primary mode of university commuting?</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                            <div>
-                                <input type="radio" name="transport" value="walk" id="t-walk" class="hidden">
-                                <label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Walk</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="transport" value="bicycle" id="t-bike" class="hidden">
-                                <label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Bicycle</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="transport" value="bus" id="t-bus" class="hidden">
-                                <label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Public Bus</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="transport" value="train" id="t-train" class="hidden">
-                                <label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Train</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="transport" value="motorbike" id="t-moto" class="hidden">
-                                <label for="t-moto" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Motorbike</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="transport" value="tuktuk" id="t-tuk" class="hidden">
-                                <label for="t-tuk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Tuk Tuk</label>
-                            </div>
-                            <div class="col-span-2 sm:col-span-3">
-                                <input type="radio" name="transport" value="car" id="t-car" class="hidden">
-                                <label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Private Car</label>
-                            </div>
+                            <div><input type="radio" name="transport" value="walk" id="t-walk" class="hidden"><label for="t-walk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Walk</label></div>
+                            <div><input type="radio" name="transport" value="bicycle" id="t-bike" class="hidden"><label for="t-bike" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Bicycle</label></div>
+                            <div><input type="radio" name="transport" value="bus" id="t-bus" class="hidden"><label for="t-bus" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Public Bus</label></div>
+                            <div><input type="radio" name="transport" value="train" id="t-train" class="hidden"><label for="t-train" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Train</label></div>
+                            <div><input type="radio" name="transport" value="motorbike" id="t-moto" class="hidden"><label for="t-moto" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Motorbike</label></div>
+                            <div><input type="radio" name="transport" value="tuktuk" id="t-tuk" class="hidden"><label for="t-tuk" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Tuk Tuk</label></div>
+                            <div class="col-span-2 sm:col-span-3"><input type="radio" name="transport" value="car" id="t-car" class="hidden"><label for="t-car" class="flex flex-col items-center justify-center rounded-xl border border-white/10 p-4 cursor-pointer text-sm font-medium transition-all text-emerald-100/70 hover:bg-white/5">Private Car</label></div>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4">
                         <h3 class="text-xl font-bold text-white">Estimated total daily travel distance?</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <input type="radio" name="distance" value="<5" id="d-1" class="hidden">
-                                <label for="d-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 5 km</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="distance" value="5-15" id="d-2" class="hidden">
-                                <label for="d-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">5 - 15 km</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="distance" value="15-30" id="d-3" class="hidden">
-                                <label for="d-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">15 - 30 km</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="distance" value=">30" id="d-4" class="hidden">
-                                <label for="d-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 30 km</label>
-                            </div>
+                            <div><input type="radio" name="distance" value="<5" id="d-1" class="hidden"><label for="d-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 5 km</label></div>
+                            <div><input type="radio" name="distance" value="5-15" id="d-2" class="hidden"><label for="d-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">5 - 15 km</label></div>
+                            <div><input type="radio" name="distance" value="15-30" id="d-3" class="hidden"><label for="d-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">15 - 30 km</label></div>
+                            <div><input type="radio" name="distance" value=">30" id="d-4" class="hidden"><label for="d-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 30 km</label></div>
                         </div>
                     </div>
                 </div>
@@ -210,35 +181,17 @@
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-white">Time of electronic device use daily?</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <input type="radio" name="device" value="<3" id="dev-1" class="hidden">
-                                <label for="dev-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 3 hours</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="device" value="3-6" id="dev-2" class="hidden">
-                                <label for="dev-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">3 - 6 hours</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="device" value="6-10" id="dev-3" class="hidden">
-                                <label for="dev-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">6 - 10 hours</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="device" value=">10" id="dev-4" class="hidden">
-                                <label for="dev-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 10 hours</label>
-                            </div>
+                            <div><input type="radio" name="device" value="<3" id="dev-1" class="hidden"><label for="dev-1" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Less than 3 hours</label></div>
+                            <div><input type="radio" name="device" value="3-6" id="dev-2" class="hidden"><label for="dev-2" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">3 - 6 hours</label></div>
+                            <div><input type="radio" name="device" value="6-10" id="dev-3" class="hidden"><label for="dev-3" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">6 - 10 hours</label></div>
+                            <div><input type="radio" name="device" value=">10" id="dev-4" class="hidden"><label for="dev-4" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">More than 10 hours</label></div>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4">
                         <h3 class="text-xl font-bold text-white">Do you regularly use Air Conditioning (AC)?</h3>
                         <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <input type="radio" name="ac" value="yes" id="ac-y" class="hidden">
-                                <label for="ac-y" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Yes</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="ac" value="no" id="ac-n" class="hidden">
-                                <label for="ac-n" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">No</label>
-                            </div>
+                            <div><input type="radio" name="ac" value="yes" id="ac-y" class="hidden"><label for="ac-y" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">Yes</label></div>
+                            <div><input type="radio" name="ac" value="no" id="ac-n" class="hidden"><label for="ac-n" class="block rounded-xl border border-white/10 p-4 text-center text-sm font-medium cursor-pointer transition-all text-emerald-100/70 hover:bg-white/5">No</label></div>
                         </div>
                     </div>
                 </div>
@@ -360,6 +313,28 @@
                 </div>
             </div>
 
+            <div class="glass-card p-6 rounded-3xl text-center space-y-4 border-emerald-500/20 bg-emerald-500/5">
+                <h3 class="text-lg font-bold text-white flex items-center justify-center gap-2">
+                    <i data-lucide="share-2" class="text-emerald-400 w-5 h-5"></i> Share Your Impact
+                </h3>
+                <p class="text-xs text-emerald-100/70 mb-4 max-w-md mx-auto">Challenge your friends and help your faculty rise on the leaderboard by sharing your official badge!</p>
+                
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="shareWhatsApp()" class="btn-wa flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+                    </button>
+                    <button onclick="shareFacebook()" class="btn-fb flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
+                        <i data-lucide="facebook" class="w-4 h-4"></i> Facebook
+                    </button>
+                    <button onclick="shareLinkedIn()" class="btn-li flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                    </button>
+                    <button onclick="shareInstagramNative()" class="btn-ig flex items-center gap-2 px-4 h-10 rounded-lg border border-white/20 text-white text-sm font-semibold transition-all">
+                        <i data-lucide="instagram" class="w-4 h-4"></i> Share / IG
+                    </button>
+                </div>
+            </div>
+
             <div class="glass-card p-6 md:p-8 rounded-3xl">
                 <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
                     <i data-lucide="alert-circle" class="text-emerald-400 w-5 h-5"></i> Targeted Sustainability Strategies
@@ -414,6 +389,9 @@
         let pieChartInstance = null;
         let barChartInstance = null;
         let emailIsValid = false;
+
+        // Global Data to populate social sharing links
+        let globalShareData = { score: 0, badge: "", url: window.location.href };
 
         // EXACT DB URL PROVIDED
         const DATABASE_URL = "https://script.google.com/macros/s/AKfycby10P54Fm_1ow7YzBr2M0dGp13zbsfcC8ghyhsQ-mo32uy0DzJ5kpZMbs_ev_mGs4pR/exec";
@@ -544,7 +522,7 @@
             const email = document.getElementById('student-email').value.trim();
             const faculty = document.getElementById('student-faculty').value;
 
-            // --- RESTORED EXACT MATHEMATICS LOGIC ---
+            // BASE CALCULATION MATHEMATICS
             let baselineScore = 100;
 
             const transport = document.querySelector('input[name="transport"]:checked').value;
@@ -608,6 +586,10 @@
             else if (green >= 64) rank = { name: "Carbon Saver", icon: "🍃", color: "text-lime-400" };
             else if (green >= 45) rank = { name: "Green Explorer", icon: "🧭", color: "text-green-400" };
 
+            // Set Global Share Data for Social Network Buttons
+            globalShareData.score = green;
+            globalShareData.badge = rank.name;
+
             document.getElementById('res-badge-icon').innerText = rank.icon;
             document.getElementById('res-badge-name').innerText = `${rank.name} Badge`;
             document.getElementById('res-badge-name').className = `text-4xl md:text-5xl font-black tracking-tight mb-4 ${rank.color}`;
@@ -666,6 +648,44 @@
             lucide.createIcons();
         }
 
+        // ================= SOCIAL SHARING LOGIC =================
+        function generateShareText() {
+            return `I just calculated my Environmental Footprint at USJ! 🌿 I scored ${globalShareData.score}/100 and earned the ${globalShareData.badge} Badge. Measure yours and help our faculty rise on the GreenSteps Leaderboard!`;
+        }
+
+        function shareWhatsApp() {
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(generateShareText() + " \n\nPlay here: " + globalShareData.url)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareFacebook() {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(globalShareData.url)}&quote=${encodeURIComponent(generateShareText())}`;
+            window.open(url, '_blank');
+        }
+
+        function shareLinkedIn() {
+            const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(generateShareText() + " \n\n" + globalShareData.url)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareInstagramNative() {
+            const textToShare = generateShareText();
+            // Attempt to trigger native mobile share menu (perfect for IG/Stories on phones)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'GreenSteps USJ',
+                    text: textToShare,
+                    url: globalShareData.url
+                }).catch((error) => console.log('Error sharing', error));
+            } else {
+                // Fallback for Desktop: Copy to Clipboard
+                navigator.clipboard.writeText(textToShare + " " + globalShareData.url).then(() => {
+                    alert("Text copied to clipboard! Open Instagram or any app to paste and share your score.");
+                });
+            }
+        }
+
+        // ================= LEADERBOARD LOGIC =================
         function renderLeaderboardDashboard() {
             const container = document.getElementById('faculty-list-container');
             container.innerHTML = '<div class="text-center p-4 text-emerald-100/40 italic">Fetching live university records...</div>';
